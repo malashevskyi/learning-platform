@@ -6,20 +6,34 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "next": "16.0.8",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "shadcn-ui": "^0.9.5"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.1.6",
+    "@storybook/addon-docs": "^10.1.6",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/addon-onboarding": "^10.1.6",
+    "@storybook/addon-styling": "^1.3.7",
+    "@storybook/nextjs": "^10.1.6",
+    "@storybook/react": "^10.1.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
+    "eslint-plugin-storybook": "^10.1.6",
+    "storybook": "^10.1.6",
+    "storybook-design-token": "^5.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
