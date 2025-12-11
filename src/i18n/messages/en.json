@@ -10,5 +10,10 @@
       "ukrainian": "Українська"
     }
   },
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "log_out": "Log Out"
+  },
   "home": {}
 }

@@ -26,6 +26,8 @@ import {
   RotateCw,
   RefreshCw,
   CircleMinus,
+  LogOut,
+  LogIn,
 } from "lucide-react";
 import { BsStars } from "react-icons/bs";
 
@@ -173,6 +175,9 @@ export const Gallery: Story = {
       <Button variant="outline" icon={<RotateCw />} />
       <Button variant="outline" icon={<RefreshCw />} />
       <Button variant="destructive" icon={<CircleMinus />} />
+      <Button variant="outline" label="auth.sign_in" icon={<LogIn />} />
+      <Button variant="default" label="auth.sign_up" icon={<UserPlus />} />
+      <Button variant="outline" label="auth.log_out" icon={<LogOut />} />
       <Button
         variant="action3d"
         size="auto"
@@ -436,5 +441,29 @@ export const CircleMinusButton: Story = {
     size: "icon",
     icon: <CircleMinus />,
     label: undefined,
+  },
+};
+
+export const SignIn: Story = {
+  args: {
+    variant: "outline",
+    label: "auth.sign_in",
+    icon: <LogIn className="text-primary" />,
+  },
+};
+
+export const SignUp: Story = {
+  args: {
+    variant: "default",
+    label: "auth.sign_up",
+    icon: <UserPlus />,
+  },
+};
+
+export const LogOutButton: Story = {
+  args: {
+    variant: "outline",
+    label: "auth.log_out",
+    icon: <LogOut className="text-muted-foreground" />,
   },
 };
