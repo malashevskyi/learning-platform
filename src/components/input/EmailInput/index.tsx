@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "@/components/ui/Input/input";
+import { Input } from "@/components/ui/Input";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 

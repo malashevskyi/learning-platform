@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select/select";
+} from "@/components/ui/Select";
 import { Globe } from "lucide-react";
 
 export const LanguageSelector = () => {

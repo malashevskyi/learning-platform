@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button/button";
+import { Button } from "@/components/ui/Button";
 import { BookOpen, CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 

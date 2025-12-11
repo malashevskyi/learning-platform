@@ -3,9 +3,9 @@ import { useFormik } from "formik";
 import GoogleButton from "react-google-button";
 import { useTranslations } from "next-intl";
 import { LogIn } from "lucide-react";
-import { EmailInput } from "@/components/input/EmailInput/emain-input";
-import { PasswordInput } from "@/components/input/PasswordInput/password-input";
-import { Button } from "@/components/ui/Button/button";
+import { EmailInput } from "@/components/input/EmailInput";
+import { PasswordInput } from "@/components/input/PasswordInput";
+import { Button } from "@/components/ui/Button";
 import { getValidationSchema } from "./getValidationSchema";
 
 export interface LoginFormValues {

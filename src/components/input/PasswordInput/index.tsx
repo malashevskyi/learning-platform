@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Input } from "@/components/ui/Input/input";
+import { Input } from "@/components/ui/Input";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/Button/button";
+import { Button } from "@/components/ui/Button";
 
 interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { LanguageSelector } from "./language-selector";
+import { LanguageSelector } from ".";
 
 const meta = {
   title: "Features/LanguageSelector",
