@@ -15,5 +15,12 @@
     "sign_up": "Sign Up",
     "log_out": "Log Out"
   },
-  "home": {}
+  "course": {
+    "start": "Start Course",
+    "continue": "Continue",
+    "lessons": "{count} lessons",
+    "completed": "Completed",
+    "resume": "Resume",
+    "open": "Open Course"
+  }
 }
