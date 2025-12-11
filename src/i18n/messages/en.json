@@ -3,6 +3,11 @@
     "meta": {
       "title": "Learning Platform",
       "description": "Some description will be here later."
+    },
+    "language": {
+      "label": "Language",
+      "english": "English",
+      "ukrainian": "Українська"
     }
   },
   "home": {}

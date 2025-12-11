@@ -3,6 +3,11 @@
     "meta": {
       "title": "Навчальна Платформа",
       "description": "Опис буде тут пізніше."
+    },
+    "language": {
+      "label": "Мова",
+      "english": "English",
+      "ukrainian": "Українська"
     }
   },
   "home": {}
