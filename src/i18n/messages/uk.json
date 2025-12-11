@@ -18,13 +18,20 @@
     "password_label": "Пароль",
     "submit": "Увійти",
     "login_google": "Увійти через Google",
+    "register_google": "Зареєструватися через Google",
     "first_time": "Перший раз тут?",
     "register_link": "Реєстрація",
     "or": "Або",
+    "confirm_password_label": "Підтвердіть пароль",
+    "confirm_password_placeholder": "Введіть пароль ще раз",
+    "already_have_account": "Вже є акаунт?",
+    "login_link": "Увійти",
+    "password_placeholder": "Введіть ваш пароль",
     "errors": {
       "required": "Це поле обов'язкове",
       "email_invalid": "Невірний формат пошти",
-      "password_short": "Пароль має бути не менше 6 символів"
+      "password_short": "Пароль має бути не менше 6 символів",
+      "password_match": "Паролі повинні співпадати"
     }
   },
   "course": {

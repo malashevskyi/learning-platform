@@ -9,24 +9,31 @@ interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   touched?: boolean;
+  label?: string;
+  confirmPassword?: boolean;
 }
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
   PasswordInputProps
->(({ className, error, touched, ...props }, ref) => {
+>(({ className, error, touched, label, confirmPassword, ...props }, ref) => {
   const t = useTranslations("auth");
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="w-full flex flex-col gap-1.5">
       <label className="text-sm font-bold ml-1 text-foreground">
-        {t("password_label")}
+        {label || t("password_label")}
       </label>
       <div className="relative">
         <Input
           ref={ref}
           type={showPassword ? "text" : "password"}
+          placeholder={
+            confirmPassword
+              ? t("confirm_password_placeholder")
+              : t("password_placeholder")
+          }
           className={cn(
             "pr-10", // Space for the eye icon
             error &&
