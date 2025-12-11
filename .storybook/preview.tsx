@@ -1,8 +1,9 @@
 import type { Preview } from "@storybook/react";
-import "../src/app/[lang]/globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import enTranslations from "../src/i18n/messages/en.json";
 import ukTranslations from "../src/i18n/messages/uk.json";
+
+import "../src/styles/global.css";
 
 const translations = {
   en: enTranslations,

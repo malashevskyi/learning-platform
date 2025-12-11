@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+:root {
+  /* ========================================== */
+  /*             PRIMITIVE TOKENS               */
+  /*   (Base palette definitions - Source)      */
+  /* ========================================== */
+
+  /* Brand Colors (HSL Values Only) */
+  --brand-green: 95 93% 34%; /* #4aa805 */
+  --brand-dark: 239 96% 10%; /* #010231 */
+  --brand-orange: 41 99% 33%; /* #a77301 */
+
+  /* Grays Palette (HSL Values Only) */
+  --gray-border: 0 0% 94%; /* #efefef */
+  --gray-muted: 240 2% 58%; /* #919096 */
+  --gray-bg: 240 7% 97%; /* #f6f6f8 */
+
+  /* Base Colors (HSL Values Only) */
+  --white: 0 0% 100%; /* #ffffff */
+  --black: 0 0% 0%; /* #000000 */
+  --error-red: 0 84% 60%; /* #ff4444 */
+
+  /* ========================================== */
+  /*             SEMANTIC TOKENS                */
+  /*   (Usage definitions - Light Theme)        */
+  /* ========================================== */
+
+  /* Backgrounds */
+  --background: var(--gray-bg);
+  --foreground: var(--brand-dark);
+
+  /* Cards & Popovers */
+  --card: var(--white);
+  --card-foreground: var(--brand-dark);
+  --popover: var(--white);
+  --popover-foreground: var(--brand-dark);
+
+  /* Primary Brand Action */
+  --primary: var(--brand-green);
+  --primary-foreground: var(--white);
+
+  /* Secondary Action */
+  --secondary: var(--brand-dark);
+  --secondary-foreground: var(--white);
+
+  /* Muted / Disabled */
+  --muted: 240 5% 96%; /* Very light gray for backgrounds */
+  --muted-foreground: var(--gray-muted);
+
+  /* Accents */
+  --accent: var(--brand-orange);
+  --accent-foreground: var(--white);
+
+  /* Destructive */
+  --destructive: var(--error-red);
+  --destructive-foreground: var(--white);
+
+  /* Borders & Inputs */
+  --border: var(--gray-border);
+  --input: var(--gray-border);
+
+  /* Rings */
+  --ring: var(--brand-green);
+
+  /* Border Radius */
+  --radius: 1rem; /* 16px */
+
+  /* Custom Shadows Color */
+  --shadow-3d-color: var(--gray-border);
+}
+
+/* ========================================== */
+/*                DARK THEME                  */
+/* ========================================== */
+.dark {
+  --background: var(--brand-dark);
+  --foreground: var(--white);
+
+  --card: 239 90% 15%; /* Darker shade of brand dark */
+  --card-foreground: var(--white);
+
+  --popover: 239 90% 15%;
+  --popover-foreground: var(--white);
+
+  --primary: 95 93% 40%; /* Lighter green for contrast */
+  --primary-foreground: var(--white);
+
+  --secondary: 240 4% 96%; /* Light gray */
+  --secondary-foreground: var(--brand-dark);
+
+  --muted: 239 40% 25%;
+  --muted-foreground: 240 5% 65%;
+
+  --accent: var(--brand-orange);
+  --accent-foreground: var(--white);
+
+  --destructive: 0 62% 30%;
+  --destructive-foreground: var(--white);
+
+  --border: 239 50% 25%;
+  --input: 239 50% 25%;
+  --ring: 95 93% 40%;
+
+  --shadow-3d-color: 239 50% 25%;
+}
+
+/* ========================================== */
+/*           TAILWIND CONFIGURATION           */
+/* ========================================== */
+@theme inline {
+  /* 
+     STRICT RULE: All colors here MUST be wrapped in hsl() 
+     because the variables above contain ONLY numbers (e.g., 95 93% 34%).
+     This enables Tailwind's opacity modifiers (e.g. bg-primary/50).
+  */
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Custom Colors mapped from primitives */
+  --color-brand-gray-border: hsl(var(--gray-border));
+  --color-brand-orange-text: hsl(var(--brand-orange));
+
+  /* Radius */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Fonts */
+  --font-rubik: var(--font-rubik);
+  --font-roboto: var(--font-roboto);
+  --font-nunito: var(--font-nunito);
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  /* Shadows */
+  /* Here we use hsl() because shadow-3d-color is a set of HSL numbers */
+  --shadow-3d: 0 5px 0 hsl(var(--shadow-3d-color));
+  --shadow-material: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-roboto;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-rubik font-bold;
+  }
+}
