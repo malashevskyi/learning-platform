@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button, ButtonProps } from "./button";
-import { ArrowRight, Settings } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Button } from "./button";
+import { ArrowRight, Settings, Plus } from "lucide-react";
 
 const meta = {
   title: "UI/Button",
@@ -22,13 +21,22 @@ const meta = {
     },
     size: {
       control: "select",
-      options: ["default", "sm", "lg", "auto"],
+      options: ["default", "sm", "lg", "auto", "icon"],
     },
     label: { control: "text" },
+    icon: {
+      control: "radio",
+      options: ["None", "ArrowRight", "Settings", "Plus"],
+      mapping: {
+        None: null,
+        ArrowRight: <ArrowRight />,
+        Settings: <Settings />,
+        Plus: <Plus />,
+      },
+    },
   },
   args: {
     variant: "default",
-    size: "default",
   },
 } satisfies Meta<typeof Button>;
 
@@ -67,30 +75,15 @@ export const NavigationLink: Story = {
 export const IconOnly: Story = {
   args: {
     variant: "default",
-    size: "icon",
+    icon: <Settings />,
     label: undefined,
   },
-  render: (args) => (
-    <Button {...args}>
-      <Settings className="w-5 h-5" />
-    </Button>
-  ),
-};
-
-const ButtonWithIconRender = (args: ButtonProps) => {
-  const t = useTranslations();
-  return (
-    <Button {...args}>
-      <span>{t("storybook.button.next_step")}</span>
-      <ArrowRight className="ml-2 w-4 h-4" />
-    </Button>
-  );
 };
 
 export const WithIcon: Story = {
   args: {
     variant: "default",
-    label: undefined,
+    label: "storybook.button.next_step",
+    icon: <ArrowRight />,
   },
-  render: (args) => <ButtonWithIconRender {...args} />,
 };

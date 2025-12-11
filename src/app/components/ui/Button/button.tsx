@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { ButtonLabel } from "./button-label";
 
 const buttonVariants = cva(
   // Base styles: Flex, cursor pointer, rounded corners, font settings, focus states
@@ -57,6 +58,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   label?: string;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -65,6 +67,7 @@ const Button: React.FC<ButtonProps> = ({
   size,
   asChild = false,
   label,
+  icon,
   ref,
   children,
   ...props
@@ -78,8 +81,11 @@ const Button: React.FC<ButtonProps> = ({
       ref={ref}
       {...props}
     >
-      {/* Priority: 1. Translated label, 2. Children (for icons or custom content) */}
-      {label ? t(label) : children}
+      <ButtonLabel
+        label={label ? t(label) : children}
+        icon={icon}
+        size={size || "default"}
+      />
     </Comp>
   );
 };
