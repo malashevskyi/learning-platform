@@ -1,12 +1,12 @@
 import React from "react";
 import { useFormik } from "formik";
-import GoogleButton from "react-google-button";
 import { useTranslations } from "next-intl";
 import { LogIn } from "lucide-react";
 import { EmailInput } from "@/components/input/EmailInput";
 import { PasswordInput } from "@/components/input/PasswordInput";
 import { Button } from "@/components/ui/Button";
 import { getValidationSchema } from "./getValidationSchema";
+import { GoogleAuth } from "../GoogleAuth";
 
 export interface LoginFormValues {
   email: string;
@@ -15,14 +15,12 @@ export interface LoginFormValues {
 
 export interface LoginFormProps {
   onSubmit: (values: LoginFormValues) => void;
-  onGoogleSignIn: () => void;
   onSignUpClick: () => void;
   isLoading?: boolean;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
-  onGoogleSignIn,
   onSignUpClick,
   isLoading = false,
 }) => {
@@ -94,7 +92,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       <div className="w-full flex justify-center">
-        <GoogleButton label={t("login_google")} onClick={onGoogleSignIn} />
+        <GoogleAuth label={t("login_google")} />
       </div>
 
       <div className="flex items-center justify-center gap-2 text-sm mt-2">

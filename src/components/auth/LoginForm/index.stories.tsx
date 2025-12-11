@@ -11,7 +11,6 @@ const meta = {
   },
   argTypes: {
     onSubmit: { action: "submitted" },
-    onGoogleSignIn: { action: "google sign in clicked" },
     onSignUpClick: { action: "sign up clicked" },
   },
 } satisfies Meta<typeof LoginForm>;
@@ -23,7 +22,6 @@ export const Default: Story = {
   args: {
     isLoading: false,
     onSubmit: fn(),
-    onGoogleSignIn: fn(),
     onSignUpClick: fn(),
   },
   render: (args) => (
@@ -37,7 +35,6 @@ export const LoadingState: Story = {
   args: {
     isLoading: true,
     onSubmit: fn(),
-    onGoogleSignIn: fn(),
     onSignUpClick: fn(),
   },
   render: (args) => (
