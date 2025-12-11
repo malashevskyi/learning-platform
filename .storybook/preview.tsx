@@ -1,13 +1,22 @@
 import type { Preview } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
-import enTranslations from "../src/i18n/messages/en.json";
-import ukTranslations from "../src/i18n/messages/uk.json";
+import enAppMessages from "../src/i18n/messages/en.json";
+import ukAppMessages from "../src/i18n/messages/uk.json";
+
+import enStorybookMessages from "../src/i18n/messages/storybook/en.json";
+import ukStorybookMessages from "../src/i18n/messages/storybook/uk.json";
 
 import "../src/styles/global.css";
 
-const translations = {
-  en: enTranslations,
-  uk: ukTranslations,
+const messagesByLocale = {
+  en: {
+    ...enAppMessages,
+    storybook: enStorybookMessages,
+  },
+  uk: {
+    ...ukAppMessages,
+    storybook: ukStorybookMessages,
+  },
 };
 
 const preview: Preview = {
@@ -39,7 +48,7 @@ const preview: Preview = {
     (Story, context) => (
       <NextIntlClientProvider
         locale={context.globals.locale}
-        messages={translations[context.globals.locale]}
+        messages={messagesByLocale[context.globals.locale]}
         onError={(error) => {
           // If a translation key is missing in the current locale messages, this warning is suppressed.
           // This is useful when testing component resizing by passing different text sizes into props.label that do not exist in the translation files.

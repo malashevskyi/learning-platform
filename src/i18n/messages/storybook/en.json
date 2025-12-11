@@ -1,0 +1,13 @@
+{
+  "button": {
+    "primary": "Primary Button",
+    "secondary": "Secondary Button",
+    "large": "Large Button",
+    "small": "Small Button",
+    "save_changes": "Save Changes",
+    "cancel": "Cancel",
+    "check_word": "Check Word",
+    "learn_to_read": "Learn to Read",
+    "next_step": "Next Step"
+  }
+}

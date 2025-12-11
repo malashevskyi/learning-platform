@@ -18,8 +18,17 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = cookieLocale || i18n.defaultLocale;
   }
 
+  const appMessages = (await import(`./messages/${locale}.json`)).default;
+
+  const storybookMessages = (
+    await import(`./messages/storybook/${locale}.json`)
+  ).default;
+
   return {
     locale,
-    messages: (await import(`./messages/${locale}.json`)).default,
+    messages: {
+      ...appMessages,
+      storybook: storybookMessages,
+    },
   };
 });
