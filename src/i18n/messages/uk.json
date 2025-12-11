@@ -13,7 +13,19 @@
   "auth": {
     "sign_in": "Увійти",
     "sign_up": "Реєстрація",
-    "log_out": "Вийти"
+    "log_out": "Вийти",
+    "email_label": "Електронна пошта",
+    "password_label": "Пароль",
+    "submit": "Увійти",
+    "login_google": "Увійти через Google",
+    "first_time": "Перший раз тут?",
+    "register_link": "Реєстрація",
+    "or": "Або",
+    "errors": {
+      "required": "Це поле обов'язкове",
+      "email_invalid": "Невірний формат пошти",
+      "password_short": "Пароль має бути не менше 6 символів"
+    }
   },
   "course": {
     "start": "Почати курс",

@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { ButtonLabel } from "./button-label";
 
 const buttonVariants = cva(
-  // Base styles: Flex, cursor pointer, rounded corners, font settings, focus states
   "inline-flex items-center justify-center whitespace-nowrap rounded-[15px] font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-rubik select-none active:scale-[0.98] cursor-pointer",
   {
     variants: {
