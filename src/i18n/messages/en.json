@@ -1,0 +1,17 @@
+{
+  "common": {
+    "meta": {
+      "title": "Learning Platform",
+      "description": "Some description will be here later."
+    }
+  },
+  "home": {},
+  "storybook": {
+    "button": {
+      "primary": "Primary Button",
+      "secondary": "Secondary Button",
+      "large": "Large Button",
+      "small": "Small Button"
+    }
+  }
+}
