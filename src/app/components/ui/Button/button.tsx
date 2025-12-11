@@ -13,22 +13,22 @@ const buttonVariants = cva(
       variant: {
         // 1. Primary (MUI Contained): Green background, white text, shadow
         default:
-          "bg-primary text-primary-foreground shadow-material hover:bg-primary/90 hover:shadow-lg active:shadow-sm",
+          "bg-primary text-primary-foreground shadow-soft hover:bg-primary/90 hover:shadow-lg active:shadow-sm",
 
         // 2. Destructive: Red
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground shadow-soft hover:bg-destructive/90 hover:shadow-lg",
 
         // 3. Outline (MUI Outlined): Transparent with colored border
         outline:
-          "border-2 border-primary text-primary bg-transparent hover:bg-primary/5",
+          "border-2 border-primary text-primary bg-transparent  hover:bg-primary/5",
 
         // 4. Secondary: Dark Blue/Gray
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:shadow-lg",
 
         // 5. Ghost: Text button, no background
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "hover:bg-accent hover:text-accent-foreground ",
 
         // 6. Navigation: Left aligned, underlined on hover, no background
         navigation:

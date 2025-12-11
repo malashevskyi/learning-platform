@@ -185,6 +185,8 @@
   --shadow-3d: 0 5px 0 hsl(var(--shadow-3d-color));
   --shadow-material: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.08);
 }
 
 @layer base {
