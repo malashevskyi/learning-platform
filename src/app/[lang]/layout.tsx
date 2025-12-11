@@ -1,18 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Rubik, Roboto, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "@/i18n/request";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+import "../../styles/globals.css";
+
+const rubik = Rubik({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-rubik",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-roboto",
+  display: "swap",
+});
+
+const nunito = Nunito_Sans({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-nunito",
+  display: "swap",
 });
 
 export async function generateMetadata({
@@ -46,7 +57,7 @@ export default async function RootLayout({
   return (
     <html lang={(await params).lang}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${rubik.variable} ${roboto.variable} ${nunito.variable} antialiased bg-background text-foreground`}
       >
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
