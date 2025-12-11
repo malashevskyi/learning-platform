@@ -88,67 +88,6 @@
 }
 
 /* ========================================== */
-/*                DARK THEME                  */
-/* ========================================== */
-.dark {
-  --background: var(--brand-dark);
-  --foreground: var(--white);
-
-  --card: 239 90% 15%; /* Darker shade of brand dark */
-  --card-foreground: var(--white);
-
-  --popover: 239 90% 15%;
-  --popover-foreground: var(--white);
-
-  --primary: 95 93% 40%; /* Lighter green for contrast */
-  --primary-foreground: var(--white);
-
-  --secondary: 240 4% 96%; /* Light gray */
-  --secondary-foreground: var(--brand-dark);
-
-  --muted: 239 40% 25%;
-  --muted-foreground: 240 5% 65%;
-
-  --accent: var(--brand-orange);
-  --accent-foreground: var(--white);
-
-  --destructive: 0 62% 30%;
-  --destructive-foreground: var(--white);
-
-  --border: 239 50% 25%;
-  --input: 239 50% 25%;
-  --ring: 95 93% 40%;
-
-  --shadow-3d-color: 239 50% 25%;
-
-  --chart-1: oklch(0.488 0.243 264.376);
-
-  --chart-2: oklch(0.696 0.17 162.48);
-
-  --chart-3: oklch(0.769 0.188 70.08);
-
-  --chart-4: oklch(0.627 0.265 303.9);
-
-  --chart-5: oklch(0.645 0.246 16.439);
-
-  --sidebar: oklch(0.208 0.042 265.755);
-
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-
-  --sidebar-border: oklch(1 0 0 / 10%);
-
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-}
-
-/* ========================================== */
 /*           TAILWIND CONFIGURATION           */
 /* ========================================== */
 @theme inline {
