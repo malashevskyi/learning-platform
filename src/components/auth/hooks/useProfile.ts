@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useSWR from "swr";
 import { supabaseClient } from "@/lib/supabase/client";
 import { useUserStore, type UserProfile } from "@/app/store/user-store";
+import { handleError } from "@/lib/error-utils";
 
 export function useProfile() {
   const user = useUserStore((state) => state.user);
@@ -52,7 +53,10 @@ export function useProfile() {
 
   useEffect(() => {
     if (profileError) {
-      console.error("[useProfile] Profile error:", profileError);
+      handleError({
+        error: profileError,
+        message: "Failed to fetch user profile",
+      });
     }
   }, [profileError]);
 

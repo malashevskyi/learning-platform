@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabaseClient } from "@/lib/supabase/client";
 import { useUserStore } from "@/app/store/user-store";
+import { handleError } from "@/lib/error-utils";
 
 export function useAuth() {
   const setUser = useUserStore((state) => state.setUser);
@@ -22,7 +23,10 @@ export function useAuth() {
           setUser(session.user);
         }
       } catch (err) {
-        console.error("[useAuth] Init error:", err);
+        handleError({
+          error: err,
+          message: "Failed to initialize authentication",
+        });
       } finally {
         if (mounted) setIsInitializing(false);
       }
