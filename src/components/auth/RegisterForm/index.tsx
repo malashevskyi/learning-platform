@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 
-import GoogleButton from "react-google-button";
 import { useTranslations } from "next-intl";
 import { UserPlus } from "lucide-react";
 import { getValidationSchema } from "./getValidationSchema";
@@ -18,14 +17,12 @@ export interface RegisterFormValues {
 
 export interface RegisterFormProps {
   onSubmit: (values: RegisterFormValues) => void;
-  onGoogleSignIn: () => void;
   onSignInClick: () => void;
   isLoading?: boolean;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSubmit,
-  onGoogleSignIn,
   onSignInClick,
   isLoading = false,
 }) => {

@@ -12,7 +12,6 @@ const meta = {
   },
   args: {
     onSubmit: fn(),
-    onGoogleSignIn: fn(),
     onSignInClick: fn(),
     isLoading: false,
   },
