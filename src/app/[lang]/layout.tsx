@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Rubik, Roboto, Nunito_Sans } from "next/font/google";
-import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "@/i18n/request";
 
-import "../../styles/globals.css";
+import "../../styles/global.css";
 
 const rubik = Rubik({
   subsets: ["latin", "cyrillic"],
