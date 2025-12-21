@@ -76,7 +76,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           disabled={isSubmitDisabled}
           icon={<LogIn />}
         >
-          {t("submit")}
+          {t("sign_in")}
         </Button>
       </form>
 
@@ -100,7 +100,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           {t("first_time")}
         </span>
         <Button variant="navigation" onClick={onSignUpClick}>
-          {t("register_link")}
+          {t("sign_up")}
         </Button>
       </div>
     </div>

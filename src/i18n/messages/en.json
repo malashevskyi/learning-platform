@@ -13,19 +13,15 @@
   "auth": {
     "sign_in": "Sign In",
     "sign_up": "Sign Up",
-    "log_out": "Log Out",
     "email_label": "Email",
     "password_label": "Password",
-    "submit": "Sign In",
     "login_google": "Sign in with Google",
     "register_google": "Sign up with Google",
     "first_time": "First time here?",
-    "register_link": "Sign Up",
     "or": "Or",
     "confirm_password_label": "Confirm Password",
     "confirm_password_placeholder": "Re-enter your password",
     "already_have_account": "Already have an account?",
-    "login_link": "Sign In",
     "password_placeholder": "Enter your password",
     "errors": {
       "required": "This field is required",
@@ -39,7 +35,6 @@
     "continue": "Continue",
     "lessons": "{count} lessons",
     "completed": "Completed",
-    "resume": "Resume",
     "open": "Open Course"
   }
 }

@@ -11,21 +11,18 @@
     }
   },
   "auth": {
-    "sign_in": "Увійти",
     "sign_up": "Реєстрація",
-    "log_out": "Вийти",
     "email_label": "Електронна пошта",
     "password_label": "Пароль",
-    "submit": "Увійти",
+    "sign_in": "Увійти",
     "login_google": "Увійти через Google",
     "register_google": "Зареєструватися через Google",
     "first_time": "Перший раз тут?",
-    "register_link": "Реєстрація",
+
     "or": "Або",
     "confirm_password_label": "Підтвердіть пароль",
     "confirm_password_placeholder": "Введіть пароль ще раз",
     "already_have_account": "Вже є акаунт?",
-    "login_link": "Увійти",
     "password_placeholder": "Введіть ваш пароль",
     "errors": {
       "required": "Це поле обов'язкове",
@@ -39,7 +36,7 @@
     "continue": "Продовжити",
     "lessons": "{count} уроків",
     "completed": "Завершено",
-    "resume": "Продовжити",
+
     "open": "Відкрити курс"
   }
 }

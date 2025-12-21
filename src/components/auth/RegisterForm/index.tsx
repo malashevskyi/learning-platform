@@ -115,7 +115,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           {t("already_have_account")}
         </span>
         <Button variant="navigation" onClick={onSignInClick}>
-          {t("login_link")}
+          {t("sign_in")}
         </Button>
       </div>
     </div>

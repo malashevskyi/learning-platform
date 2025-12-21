@@ -90,7 +90,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             <div className="flex-1" />
           )}
 
-          {isStarted && <Button>{t("resume")}</Button>}
+          {isStarted && <Button>{t("continue")}</Button>}
           {!isStarted && !isCompleted && <Button>{t("start")}</Button>}
           {isCompleted && <Button>{t("open")}</Button>}
         </div>

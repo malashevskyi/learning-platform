@@ -177,7 +177,7 @@ export const Gallery: Story = {
       <Button variant="destructive" icon={<CircleMinus />} />
       <Button variant="outline" label="auth.sign_in" icon={<LogIn />} />
       <Button variant="default" label="auth.sign_up" icon={<UserPlus />} />
-      <Button variant="outline" label="auth.log_out" icon={<LogOut />} />
+      <Button variant="outline" label="auth.logout" icon={<LogOut />} />
       <Button
         variant="action3d"
         size="auto"
@@ -463,7 +463,7 @@ export const SignUp: Story = {
 export const LogOutButton: Story = {
   args: {
     variant: "outline",
-    label: "auth.log_out",
+    label: "auth.logout",
     icon: <LogOut className="text-muted-foreground" />,
   },
 };
