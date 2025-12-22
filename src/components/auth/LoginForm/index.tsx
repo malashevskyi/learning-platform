@@ -5,8 +5,11 @@ import { LogIn } from "lucide-react";
 import { EmailInput } from "@/components/input/EmailInput";
 import { PasswordInput } from "@/components/input/PasswordInput";
 import { Button } from "@/components/ui/Button";
+import { InlineError } from "@/components/ui/InlineError";
 import { getValidationSchema } from "./getValidationSchema";
 import { GoogleAuth } from "../GoogleAuth";
+import Link from "next/link";
+import { ROUTES } from "@/app/shared/constants/routes";
 
 export interface LoginFormValues {
   email: string;
@@ -15,14 +18,14 @@ export interface LoginFormValues {
 
 export interface LoginFormProps {
   onSubmit: (values: LoginFormValues) => void;
-  onSignUpClick: () => void;
   isLoading?: boolean;
+  formError?: string | null;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
-  onSignUpClick,
   isLoading = false,
+  formError = null,
 }) => {
   const t = useTranslations("auth");
 
@@ -51,6 +54,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <div className="w-full flex flex-col gap-6">
+      <InlineError message={formError} />
       <form
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-4"
@@ -74,6 +78,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           variant="default"
           className="w-full mt-2"
           disabled={isSubmitDisabled}
+          loading={isLoading}
           icon={<LogIn />}
         >
           {t("sign_in")}
@@ -99,8 +104,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <span className="text-muted-foreground text-base">
           {t("first_time")}
         </span>
-        <Button variant="navigation" onClick={onSignUpClick}>
-          {t("sign_up")}
+        <Button asChild variant="navigation">
+          <Link href={ROUTES.REGISTER}>{t("sign_up")}</Link>
         </Button>
       </div>
     </div>

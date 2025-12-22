@@ -8,6 +8,9 @@ import { PasswordInput } from "@/components/input/PasswordInput";
 import { EmailInput } from "@/components/input/EmailInput";
 import { Button } from "@/components/ui/Button";
 import { GoogleAuth } from "../GoogleAuth";
+import InlineError from "@/components/ui/InlineError";
+import Link from "next/link";
+import { ROUTES } from "@/app/shared/constants/routes";
 
 export interface RegisterFormValues {
   email: string;
@@ -17,14 +20,14 @@ export interface RegisterFormValues {
 
 export interface RegisterFormProps {
   onSubmit: (values: RegisterFormValues) => void;
-  onSignInClick: () => void;
   isLoading?: boolean;
+  formError?: string | null;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSubmit,
-  onSignInClick,
   isLoading = false,
+  formError = null,
 }) => {
   const t = useTranslations("auth");
 
@@ -46,7 +49,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     validationSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    validateOnMount: true,
     onSubmit: (values) => {
       onSubmit(values as RegisterFormValues);
     },
@@ -56,6 +58,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
     <div className="w-full flex flex-col gap-6">
+      <InlineError message={formError} />
       <form
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-4"
@@ -89,7 +92,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           size="default"
           className="w-full mt-2"
           disabled={isSubmitDisabled}
+          loading={isLoading}
           icon={<UserPlus />}
+          onClick={() => formik.submitForm()}
         >
           {t("sign_up")}
         </Button>
@@ -114,8 +119,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         <span className="text-muted-foreground font-base">
           {t("already_have_account")}
         </span>
-        <Button variant="navigation" onClick={onSignInClick}>
-          {t("sign_in")}
+        <Button asChild variant="navigation">
+          <Link href={ROUTES.LOGIN}>{t("sign_in")}</Link>
         </Button>
       </div>
     </div>
