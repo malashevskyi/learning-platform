@@ -1,6 +1,10 @@
+import { handleError } from "@/lib/error-utils";
 import { useEffect, useState } from "react";
 
 type ResendState = "idle" | "loading" | "success" | "error";
+
+const COOLDOWN_DEFAULT_DURATION = 60; // seconds
+const ERROR_RESET_DEFAULT_DURATION = 5000; // milliseconds
 
 export interface UseResendCooldownOptions {
   /**
@@ -14,12 +18,13 @@ export interface UseResendCooldownOptions {
    * @default 5000
    */
   errorResetDuration?: number;
+  onResend?: () => Promise<void>;
 }
 
 export interface UseResendCooldownReturn {
   resendState: ResendState;
   cooldown: number | null;
-  handleResend: (resendFn: () => Promise<void>) => Promise<void>;
+  handleResend: () => Promise<void>;
   reset: () => void;
 }
 
@@ -27,9 +32,13 @@ export interface UseResendCooldownReturn {
  * Hook for managing resend email cooldown logic
  */
 export const useResendCooldown = (
-  options: UseResendCooldownOptions = {}
+  options: UseResendCooldownOptions
 ): UseResendCooldownReturn => {
-  const { cooldownDuration = 60, errorResetDuration = 5000 } = options;
+  const {
+    cooldownDuration = COOLDOWN_DEFAULT_DURATION,
+    errorResetDuration = ERROR_RESET_DEFAULT_DURATION,
+    onResend,
+  } = options;
 
   const [resendState, setResendState] = useState<ResendState>("idle");
   const [cooldown, setCooldown] = useState<number | null>(null);
@@ -50,13 +59,17 @@ export const useResendCooldown = (
     return () => clearInterval(id);
   }, [cooldown]);
 
-  const handleResend = async (resendFn: () => Promise<void>) => {
+  const handleResend = async () => {
     setResendState("loading");
     try {
-      await resendFn();
+      if (onResend) await onResend();
       setCooldown(cooldownDuration);
       setResendState("success");
-    } catch {
+    } catch (error) {
+      handleError({
+        error,
+        clientMessage: "errors.resend_email_failed",
+      });
       setResendState("error");
       setTimeout(() => {
         setResendState("idle");

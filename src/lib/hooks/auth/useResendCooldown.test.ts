@@ -7,19 +7,22 @@ import { useResendCooldown } from "./useResendCooldown";
 
 describe("useResendCooldown - REAL TIME", () => {
   it("should initialize with idle state and no cooldown", () => {
-    const { result } = renderHook(() => useResendCooldown());
+    const mockResendFn = vi.fn().mockResolvedValue(undefined);
+    const { result } = renderHook(() =>
+      useResendCooldown({ onResend: mockResendFn })
+    );
 
     expect(result.current.resendState).toBe("idle");
     expect(result.current.cooldown).toBeNull();
   });
 
   it("should handle successful resend and start cooldown", async () => {
+    const mockResendFn = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useResendCooldown({ cooldownDuration: 3 })
+      useResendCooldown({ cooldownDuration: 3, onResend: mockResendFn })
     );
 
-    const mockResendFn = vi.fn().mockResolvedValue(undefined);
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     // Wait for state update
     await waitFor(() => {
@@ -33,11 +36,11 @@ describe("useResendCooldown - REAL TIME", () => {
   it("should countdown in REAL TIME from 10 to 0", async () => {
     const mockResendFn = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useResendCooldown({ cooldownDuration: 10 })
+      useResendCooldown({ cooldownDuration: 10, onResend: mockResendFn })
     );
 
     // Start resend
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     // Wait for state to update
     await waitFor(() => {
@@ -75,10 +78,10 @@ describe("useResendCooldown - REAL TIME", () => {
   it("should handle resend error and reset after 3 seconds", async () => {
     const mockResendFn = vi.fn().mockRejectedValue(new Error("Network error"));
     const { result } = renderHook(() =>
-      useResendCooldown({ errorResetDuration: 3000 })
+      useResendCooldown({ errorResetDuration: 3000, onResend: mockResendFn })
     );
 
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     // Wait for error state
     await waitFor(() => {
@@ -101,10 +104,10 @@ describe("useResendCooldown - REAL TIME", () => {
   it("should keep button disabled during countdown", async () => {
     const mockResendFn = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useResendCooldown({ cooldownDuration: 5 })
+      useResendCooldown({ cooldownDuration: 5, onResend: mockResendFn })
     );
 
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     // Wait for initial state
     await waitFor(() => {
@@ -143,11 +146,11 @@ describe("useResendCooldown - REAL TIME", () => {
   it("should allow multiple resend cycles", async () => {
     const mockResendFn = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useResendCooldown({ cooldownDuration: 3 })
+      useResendCooldown({ cooldownDuration: 3, onResend: mockResendFn })
     );
 
     // Cycle 1
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     await waitFor(() => {
       expect(result.current.resendState).toBe("success");
@@ -166,7 +169,7 @@ describe("useResendCooldown - REAL TIME", () => {
     });
 
     // Cycle 2
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     await waitFor(() => {
       expect(result.current.resendState).toBe("success");
@@ -189,10 +192,10 @@ describe("useResendCooldown - REAL TIME", () => {
   it("should reset cooldown immediately", async () => {
     const mockResendFn = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useResendCooldown({ cooldownDuration: 5 })
+      useResendCooldown({ cooldownDuration: 5, onResend: mockResendFn })
     );
 
-    await result.current.handleResend(mockResendFn);
+    await result.current.handleResend();
 
     await waitFor(() => {
       expect(result.current.resendState).toBe("success");

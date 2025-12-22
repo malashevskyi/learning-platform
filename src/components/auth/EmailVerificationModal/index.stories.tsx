@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EmailVerificationModal } from "./";
 import { fn } from "@storybook/test";
+import { useAuthModalStore } from "@/store/auth-modal-store";
 
 const meta = {
   title: "Features/Auth/EmailVerificationModal",
@@ -22,6 +23,16 @@ const meta = {
   args: {
     onClose: fn(),
   },
+  decorators: [
+    (Story) => {
+      useAuthModalStore.setState({
+        activeModal: "verification",
+        registeredEmail: "user@example.com",
+        verificationVariant: "new-registration",
+      });
+      return <Story />;
+    },
+  ],
 } satisfies Meta<typeof EmailVerificationModal>;
 
 export default meta;
