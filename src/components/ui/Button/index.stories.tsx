@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from ".";
+import Link from "next/link";
 import {
   ArrowRight,
   Settings,
@@ -221,9 +222,17 @@ export const Action3D: Story = {
 
 export const NavigationLink: Story = {
   args: {
-    variant: "navigation",
     label: "storybook.button.learn_to_read",
   },
+  render: (args) => (
+    <div className="p-4">
+      <Button {...args} asChild variant="navigation">
+        <Link href="/?path=/story/ui-button--navigation-link">
+          Navigation Link
+        </Link>
+      </Button>
+    </div>
+  ),
 };
 
 export const IconOnly: Story = {

@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { ButtonLabel } from "./ButtonLabel";
+import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-[15px] font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-rubik select-none active:scale-[0.98] cursor-pointer",
@@ -58,6 +59,7 @@ export interface ButtonProps
   asChild?: boolean;
   label?: string;
   icon?: React.ReactNode;
+  loading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -67,25 +69,47 @@ const Button: React.FC<ButtonProps> = ({
   asChild = false,
   label,
   icon,
+  loading = false,
   ref,
   children,
+  disabled,
   ...props
 }) => {
   const t = useTranslations();
-  const Comp = asChild ? Slot : "button";
+
+  if (asChild) {
+    const slotClass = cn(
+      buttonVariants({ variant, size, className }),
+      disabled ? "pointer-events-none opacity-50" : undefined
+    );
+
+    return (
+      <Slot className={slotClass} ref={ref} {...props}>
+        {children}
+      </Slot>
+    );
+  }
 
   return (
-    <Comp
+    <button
       className={cn(buttonVariants({ variant, size, className }))}
       ref={ref}
+      disabled={disabled || loading}
       {...props}
     >
-      <ButtonLabel
-        label={label ? t(label) : children}
-        icon={icon}
-        size={size || "default"}
-      />
-    </Comp>
+      {loading ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <span>{label ? t(label) : children}</span>
+        </>
+      ) : (
+        <ButtonLabel
+          label={label ? t(label) : children}
+          icon={icon}
+          size={size || "default"}
+        />
+      )}
+    </button>
   );
 };
 Button.displayName = "Button";
