@@ -32,7 +32,7 @@ const buttonVariants = cva(
 
         // 6. Navigation: Left aligned, underlined on hover, no background
         navigation:
-          "justify-start p-0 h-auto text-lg underline-offset-4 hover:underline text-foreground hover:text-primary bg-transparent rounded-none",
+          "justify-start p-0 h-auto text-lg underline-offset-4 underline text-foreground hover:text-primary bg-transparent rounded-none",
 
         // 7. Action 3D: Custom style for learning interface (white, thick border, solid shadow)
         action3d:
@@ -80,7 +80,8 @@ const Button: React.FC<ButtonProps> = ({
   if (asChild) {
     const slotClass = cn(
       buttonVariants({ variant, size, className }),
-      disabled ? "pointer-events-none opacity-50" : undefined
+      disabled ? "pointer-events-none opacity-50" : undefined,
+      "justify-center"
     );
 
     return (
