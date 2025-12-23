@@ -14,10 +14,14 @@ export const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
 
     return (
       <div className="w-full flex flex-col gap-1.5">
-        <label className="text-sm font-bold ml-1 text-foreground">
+        <label
+          htmlFor={props.id}
+          className="text-sm font-bold ml-1 text-foreground"
+        >
           {t("email_label")}
         </label>
         <Input
+          id={props.id}
           ref={ref}
           type="email"
           placeholder="example@mail.com"

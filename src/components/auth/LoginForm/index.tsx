@@ -1,4 +1,5 @@
 import React from "react";
+import { useThrottle } from "react-use";
 import { useFormik } from "formik";
 import { useTranslations } from "next-intl";
 import { LogIn } from "lucide-react";
@@ -10,6 +11,7 @@ import { getValidationSchema } from "./getValidationSchema";
 import { GoogleAuth } from "../GoogleAuth";
 import Link from "next/link";
 import { ROUTES } from "@/app/shared/constants/routes";
+import { useForgotPassword } from "@/lib/hooks/auth/useForgotPassword";
 
 export interface LoginFormValues {
   email: string;
@@ -20,14 +22,23 @@ export interface LoginFormProps {
   onSubmit: (values: LoginFormValues) => void;
   isLoading?: boolean;
   formError?: string | null;
+  /** Whether to show the forgot password section (e.g., on invalid credentials) */
+  showForgotPassword?: boolean;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   isLoading = false,
   formError = null,
+  showForgotPassword = false,
 }) => {
   const t = useTranslations("auth");
+  const {
+    isSending: isSendingReset,
+    resetSent,
+    resetError,
+    sendPasswordResetEmail,
+  } = useForgotPassword();
 
   const validationSchema = getValidationSchema({
     errors: {
@@ -52,9 +63,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   const isSubmitDisabled = isLoading || !formik.isValid || !formik.dirty;
 
+  const handleForgotPassword = () => {
+    sendPasswordResetEmail(formik.values.email);
+  };
+
+  const throttledEmail = useThrottle(formik.values.email, 1000);
+
+  // Determine if we should show forgot password section
+  const shouldShowForgotPassword =
+    showForgotPassword && throttledEmail && !formik.errors.email;
+
   return (
     <div className="w-full flex flex-col gap-6">
-      <InlineError message={formError} />
+      {formError && <InlineError message={formError} />}
+      {resetError && <InlineError message={resetError} />}
+
       <form
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-4"
@@ -65,6 +88,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           error={formik.errors.email}
           touched={formik.touched.email}
         />
+
+        {/* Forgot password help section - shown when there's an invalid credentials error */}
+        {shouldShowForgotPassword && (
+          <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <p className="text-sm text-amber-800 mb-3">
+              {t.rich("account_already_exists_message", {
+                email: throttledEmail,
+                highlight: (children: React.ReactNode) => (
+                  <span className="font-semibold text-amber-900">
+                    {children}
+                  </span>
+                ),
+              })}
+            </p>
+            {resetSent ? (
+              <div className="p-2 bg-green-100 text-green-700 rounded text-sm text-center">
+                {t("password_reset_email_sent")}
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleForgotPassword}
+                loading={isSendingReset}
+                className="w-full"
+              >
+                {t("forgot_password")}
+              </Button>
+            )}
+          </div>
+        )}
 
         <PasswordInput
           id="password"

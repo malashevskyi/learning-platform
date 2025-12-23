@@ -22,11 +22,15 @@ export const PasswordInput = React.forwardRef<
 
   return (
     <div className="w-full flex flex-col gap-1.5">
-      <label className="text-sm font-bold ml-1 text-foreground">
+      <label
+        htmlFor={props.id}
+        className="text-sm font-bold ml-1 text-foreground"
+      >
         {label || t("password_label")}
       </label>
       <div className="relative">
         <Input
+          id={props.id}
           ref={ref}
           type={showPassword ? "text" : "password"}
           placeholder={
