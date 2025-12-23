@@ -35,7 +35,6 @@ export const ProviderMismatchModal: React.FC = ({}) => {
   const t = useTranslations("auth");
   const provider = useAuthModalStore((state) => state.providerMismatchType);
   const activeModal = useAuthModalStore((state) => state.activeModal);
-  const email = useAuthModalStore((state) => state.registeredEmail);
   const closeAllModals = useAuthModalStore((state) => state.closeAllModals);
 
   const config = VARIANT_CONFIG[provider];
@@ -84,8 +83,7 @@ export const ProviderMismatchModal: React.FC = ({}) => {
         {/* Message */}
         <p className="text-center text-muted-foreground mb-6">
           {t.rich(config.messageKey, {
-            email,
-            highlight: (children: React.ReactNode) => (
+            heading: (children: React.ReactNode) => (
               <span className="font-semibold text-primary">{children}</span>
             ),
           })}
@@ -104,7 +102,7 @@ export const ProviderMismatchModal: React.FC = ({}) => {
             </Button>
           )}
           {!config.providerAuthKey && (
-            <Button>
+            <Button variant="navigation" asChild size="lg">
               <Link href={ROUTES.LOGIN}>{t("go_to_login")}</Link>
             </Button>
           )}
