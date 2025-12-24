@@ -4,7 +4,6 @@ import { LanguageSelector } from ".";
 const meta = {
   title: "Features/LanguageSelector",
   component: LanguageSelector,
-  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

@@ -1,4 +1,4 @@
-import { userEvent, within } from "@storybook/test";
+import { userEvent } from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import UpdatePasswordForm from "./";
 
@@ -6,7 +6,19 @@ const meta = {
   title: "Features/Auth/UpdatePasswordForm",
   component: UpdatePasswordForm,
   parameters: { layout: "centered" },
-  argTypes: {},
+  argTypes: {
+    initialShowSuccess: { control: "boolean" },
+  },
+  args: {
+    initialShowSuccess: false,
+  },
+  decorators: [
+    (Story, { args }) => (
+      <div key={JSON.stringify(args.initialShowSuccess)}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof UpdatePasswordForm>;
 
 export default meta;
@@ -36,11 +48,8 @@ export const WithError: Story = {
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const passwordInput = canvas.getByPlaceholderText(/Enter your password/i);
-
-    await userEvent.type(passwordInput, "1");
-
+    const passwordInput = canvasElement.querySelector("#password");
+    if (passwordInput) await userEvent.type(passwordInput, "1");
     await userEvent.click(canvasElement);
   },
 };

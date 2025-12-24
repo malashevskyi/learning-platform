@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build"
   },
   "dependencies": {
@@ -23,6 +23,8 @@
     "ensure-error": "^5.0.0",
     "formik": "^2.4.9",
     "lucide-react": "^0.560.0",
+    "msw": "^2.12.4",
+    "msw-storybook-addon": "^2.0.6",
     "next": "16.0.10",
     "next-intl": "^4.5.8",
     "query-string": "^9.3.1",
@@ -64,5 +66,10 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.15"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { AlreadyRegisteredModal } from "./";
-import { fn, userEvent, within } from "@storybook/test";
+import { userEvent, within } from "@storybook/test";
 import { useAuthModalStore } from "@/store/auth-modal-store";
 import * as RoutesModule from "@/app/shared/constants/routes";
-import { supabaseClient } from "@/lib/supabase/client";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (RoutesModule as any).ROUTES.LOGIN =
@@ -15,16 +14,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  argTypes: {
-    isOpen: {
-      control: "boolean",
-      description: "Controls whether the modal is visible",
-    },
-    email: {
-      control: "text",
-      description: "Email address shown in the modal",
-    },
-  },
+  argTypes: {},
   decorators: [
     (Story) => {
       useAuthModalStore.setState({
@@ -49,9 +39,6 @@ export const WithForgotPassword: Story = {
       return <Story />;
     },
   ],
-  args: {
-    isOpen: true,
-  },
 };
 
 export const ResetPasswordEmailSent: Story = {
@@ -66,15 +53,7 @@ export const ResetPasswordEmailSent: Story = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    supabaseClient.auth.resetPasswordForEmail = fn().mockResolvedValue({
-      data: {},
-      error: null,
-    });
-
-    const forgotPasswordBtn = canvas.getByRole("button", {
-      name: /forgot password/i,
-    });
-    await userEvent.click(forgotPasswordBtn);
+    const forgotPasswordBtn = canvas.getByTestId("#forgot-password-button");
+    if (forgotPasswordBtn) await userEvent.click(forgotPasswordBtn);
   },
 };

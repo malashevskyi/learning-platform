@@ -1,3 +1,4 @@
+import { VALIDATION } from "@/app/shared/constants/ui";
 import * as Yup from "yup";
 
 export interface RegisterSchemaTranslations {
@@ -14,7 +15,9 @@ export const getValidationSchema = ({
 }: RegisterSchemaTranslations) =>
   Yup.object({
     email: Yup.string().email(emailInvalid).required(required),
-    password: Yup.string().min(6, passwordShort).required(required),
+    password: Yup.string()
+      .min(VALIDATION.PASSWORD_MIN_LENGTH, passwordShort)
+      .required(required),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], passwordMatch)
       .required(required),

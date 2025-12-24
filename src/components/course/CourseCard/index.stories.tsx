@@ -4,7 +4,6 @@ import { CourseCard } from ".";
 const meta = {
   title: "Features/CourseCard",
   component: CourseCard,
-  tags: ["autodocs"],
   argTypes: {
     progress: {
       control: { type: "range", min: 0, max: 100 },
@@ -64,6 +63,11 @@ export const Completed: Story = {
 export const Gallery: Story = {
   argTypes: {
     progress: { table: { disable: true } },
+    title: { table: { disable: true } },
+    description: { table: { disable: true } },
+    imageSrc: { table: { disable: true } },
+    lessonsCount: { table: { disable: true } },
+    category: { table: { disable: true } },
   },
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 bg-gray-50">

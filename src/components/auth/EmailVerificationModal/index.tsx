@@ -107,6 +107,7 @@ export const EmailVerificationModal: React.FC = () => {
       {/* Actions */}
       <div className="flex flex-col gap-3">
         <Button
+          data-testid="resend-email-button"
           variant="outline"
           className="w-full"
           onClick={() => void handleResend()}

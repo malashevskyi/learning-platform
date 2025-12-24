@@ -12,12 +12,11 @@ import { getValidationSchema } from "./getValidationSchema";
 
 interface PasswordExpiredNotificationProps {
   errorDescription?: string;
-  email?: string;
 }
 
 export const PasswordExpiredNotification: React.FC<
   PasswordExpiredNotificationProps
-> = ({ errorDescription, email: propEmail }) => {
+> = ({ errorDescription }) => {
   const t = useTranslations("auth");
   const { isSending, resetSent, resetError, sendPasswordResetEmail } =
     useForgotPassword();
@@ -31,7 +30,7 @@ export const PasswordExpiredNotification: React.FC<
 
   const formik = useFormik({
     initialValues: {
-      email: propEmail || "",
+      email: "",
     },
     validationSchema,
     validateOnChange: true,
@@ -41,8 +40,7 @@ export const PasswordExpiredNotification: React.FC<
     },
   });
 
-  const isSubmitDisabled =
-    isSending || !formik.isValid || (!propEmail && !formik.dirty);
+  const isSubmitDisabled = isSending || !formik.isValid || !formik.dirty;
 
   if (resetSent) {
     return (
@@ -109,14 +107,12 @@ export const PasswordExpiredNotification: React.FC<
       </div>
 
       <form onSubmit={formik.handleSubmit} className="w-full space-y-3">
-        {!propEmail && (
-          <EmailInput
-            id="email"
-            {...formik.getFieldProps("email")}
-            error={formik.errors.email}
-            touched={formik.touched.email}
-          />
-        )}
+        <EmailInput
+          id="email"
+          {...formik.getFieldProps("email")}
+          error={formik.errors.email}
+          touched={formik.touched.email}
+        />
 
         {resetError && (
           <div className="text-sm text-destructive">{resetError}</div>

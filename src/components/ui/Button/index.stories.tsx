@@ -58,7 +58,13 @@ const meta = {
         disable: true,
       },
     },
-    label: { control: "text" },
+    label: {
+      control: "text",
+      if: {
+        arg: "size",
+        neq: "icon",
+      },
+    },
     icon: {
       control: "radio",
       options: [
@@ -120,9 +126,12 @@ const meta = {
         CircleMinus: <CircleMinus />,
       },
     },
+    loading: { control: "boolean" },
   },
   args: {
     variant: "default",
+    loading: false,
+    label: "",
   },
 } satisfies Meta<typeof Button>;
 
@@ -135,6 +144,7 @@ export const Gallery: Story = {
     size: { table: { disable: true } },
     label: { table: { disable: true } },
     icon: { table: { disable: true } },
+    loading: { table: { disable: true } },
   },
   render: () => (
     <div className="flex flex-wrap gap-4 items-center justify-start">
@@ -426,7 +436,7 @@ export const UploadButton: Story = {
   },
 };
 
-export const RotateCwButton: Story = {
+export const RotateButton: Story = {
   args: {
     variant: "outline",
     size: "icon",
@@ -435,7 +445,7 @@ export const RotateCwButton: Story = {
   },
 };
 
-export const RefreshCwButton: Story = {
+export const RefreshButton: Story = {
   args: {
     variant: "outline",
     size: "icon",

@@ -1,3 +1,5 @@
+import { http, HttpResponse } from "msw";
+import { initialize, mswLoader } from "msw-storybook-addon";
 import type { Preview } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
 import enAppMessages from "../src/i18n/messages/en.json";
@@ -7,6 +9,8 @@ import enStorybookMessages from "../src/i18n/messages/storybook/en.json";
 import ukStorybookMessages from "../src/i18n/messages/storybook/uk.json";
 
 import "../src/styles/global.css";
+
+initialize();
 
 const messagesByLocale = {
   en: {
@@ -34,7 +38,21 @@ const preview: Preview = {
         pathname: "/en",
       },
     },
+    msw: {
+      handlers: [
+        http.post("*/auth/v1/recover", () => {
+          return new HttpResponse(null, { status: 200 });
+        }),
+        http.post("*/auth/v1/resend", async () => {
+          return HttpResponse.json({}, { status: 200 });
+        }),
+        http.post("*/auth/v1/user", () => {
+          return HttpResponse.json({ user: { id: "123" } });
+        }),
+      ],
+    },
   },
+  loaders: [mswLoader],
   globalTypes: {
     locale: {
       description: "Internationalization locale",

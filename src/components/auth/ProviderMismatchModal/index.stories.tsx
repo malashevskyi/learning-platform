@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ProviderMismatchModal } from "./";
-import { fn } from "@storybook/test";
 import { useAuthModalStore } from "@/store/auth-modal-store";
 import * as RoutesModule from "@/app/shared/constants/routes";
 
@@ -14,19 +13,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  argTypes: {
-    isOpen: {
-      control: "boolean",
-      description: "Controls whether the modal is visible",
-    },
-    email: {
-      control: "text",
-      description: "Email address shown in the modal",
-    },
-  },
-  args: {
-    onClose: fn(),
-  },
+  argTypes: {},
   decorators: [
     (Story) => {
       useAuthModalStore.setState({
@@ -42,11 +29,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Google: Story = {
-  args: {
-    isOpen: true,
-  },
-};
+export const Google: Story = {};
 
 export const Email: Story = {
   decorators: [
@@ -59,9 +42,6 @@ export const Email: Story = {
       return <Story />;
     },
   ],
-  args: {
-    isOpen: true,
-  },
 };
 
 export const NoProviderAuthKey: Story = {
@@ -75,7 +55,4 @@ export const NoProviderAuthKey: Story = {
       return <Story />;
     },
   ],
-  args: {
-    isOpen: true,
-  },
 };
