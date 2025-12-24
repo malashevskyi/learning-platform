@@ -8,10 +8,9 @@ import SimpleModal from "@/components/ui/SimpleModal";
 import Link from "next/link";
 import { useAuthModalStore } from "@/store/auth-modal-store";
 import { ROUTES } from "@/app/shared/constants/routes";
-import { supabaseClient } from "@/lib/supabase/client";
-import { handleError } from "@/lib/error-utils";
 import { InlineError } from "@/components/ui/InlineError";
 import { useForgotPassword } from "@/lib/hooks/auth/useForgotPassword";
+import { GoogleAuth } from "../GoogleAuth";
 
 /**
  * AlreadyRegisteredModal Component
@@ -35,18 +34,6 @@ export const AlreadyRegisteredModal: React.FC = () => {
   const handleForgotPassword = async () => {
     if (!registeredEmail) return;
     await sendPasswordResetEmail(registeredEmail);
-  };
-
-  const handleSignInWithGoogle = async () => {
-    try {
-      await supabaseClient.auth.signInWithOAuth({ provider: "google" });
-    } catch (error) {
-      handleError({
-        error,
-        clientMessage: "errors.oauth_provider_error",
-        showToast: false,
-      });
-    }
   };
 
   return (
@@ -81,7 +68,7 @@ export const AlreadyRegisteredModal: React.FC = () => {
       </p>
 
       {/* Action buttons */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col items-center gap-7">
         {!resetSent ? (
           <>
             <Button
@@ -95,14 +82,7 @@ export const AlreadyRegisteredModal: React.FC = () => {
               {t("forgot_password")}
             </Button>
 
-            <Button
-              variant="default"
-              size="lg"
-              onClick={handleSignInWithGoogle}
-              className="w-full"
-            >
-              {t("login_google")}
-            </Button>
+            <GoogleAuth label={t("login_google")} />
           </>
         ) : (
           <div className="p-3 bg-green-50 text-green-700 rounded-md text-center">
