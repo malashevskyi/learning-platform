@@ -23,13 +23,15 @@ export default function PasswordResetPage() {
       // 1. Check for URL errors first (fastest check)
       const urlError = searchParams.get("error");
       if (urlError) {
+        window.history.replaceState(null, "", window.location.pathname);
+
         if (!cancelled) {
-          handleError({ error: urlError });
+          handleError({
+            error: urlError,
+            showToast: false,
+          });
           setStatus("expired");
-          setErrorMessage(
-            searchParams.get("error_description") ||
-              t("password_reset_link_expired_description")
-          );
+          setErrorMessage(t("password_reset_link_expired_description"));
         }
         return;
       }
@@ -73,7 +75,10 @@ export default function PasswordResetPage() {
         if (cancelled) return;
 
         if (error) {
-          handleError({ error });
+          handleError({
+            error,
+            showToast: false,
+          });
           setStatus("expired");
           setErrorMessage(t("password_reset_link_expired_description"));
           return;
@@ -83,7 +88,10 @@ export default function PasswordResetPage() {
         window.history.replaceState(null, "", window.location.pathname);
       } catch (error) {
         if (cancelled) return;
-        handleError({ error });
+        handleError({
+          error,
+          showToast: false,
+        });
         setStatus("error");
         setErrorMessage(t("errors.generic"));
       }
