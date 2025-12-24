@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import type { EmailVerificationVariant } from "@/components/auth/EmailVerificationModal";
-import type { MismatchProvider } from "@/components/auth/ProviderMismatchModal";
 
 export type ModalType =
   | "verification"
@@ -14,7 +13,6 @@ interface AuthModalState {
   activeModal: ModalType;
   registeredEmail: string;
   verificationVariant: EmailVerificationVariant;
-  providerMismatchType: MismatchProvider;
 }
 
 interface AuthModalActions {
@@ -24,10 +22,6 @@ interface AuthModalActions {
   ) => void;
   showAlreadyRegisteredModal: (email: string) => void;
   showPasswordResetModal: (email?: string) => void;
-  showProviderMismatchModal: (
-    email: string,
-    provider: MismatchProvider
-  ) => void;
   closeAllModals: () => void;
   setRegisteredEmail: (email: string) => void;
 }
@@ -59,13 +53,6 @@ export const useAuthModalStore = create<AuthModalStore>((set) => ({
     set({
       activeModal: "passwordReset",
       registeredEmail: email || "",
-    }),
-
-  showProviderMismatchModal: (email, provider) =>
-    set({
-      activeModal: "providerMismatch",
-      registeredEmail: email,
-      providerMismatchType: provider,
     }),
 
   closeAllModals: () =>

@@ -4,7 +4,6 @@ import { SUPABASE_ERROR_CODES } from "@/app/shared/constants/auth";
 import { ROUTES } from "@/app/shared/constants/routes";
 import { EmailVerificationModal } from "@/components/auth/EmailVerificationModal";
 import { LoginForm, LoginFormValues } from "@/components/auth/LoginForm";
-import { ProviderMismatchModal } from "@/components/auth/ProviderMismatchModal";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { handleError } from "@/lib/error-utils";
 import { useError } from "@/lib/hooks/useError";
@@ -118,7 +117,6 @@ export default function LoginPage() {
       </div>
 
       <EmailVerificationModal />
-      <ProviderMismatchModal />
     </>
   );
 }

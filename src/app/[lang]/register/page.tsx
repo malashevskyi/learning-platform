@@ -4,7 +4,6 @@ import { SUPABASE_ERROR_CODES } from "@/app/shared/constants/auth";
 import { ROUTES } from "@/app/shared/constants/routes";
 import { AlreadyRegisteredModal } from "@/components/auth/AlreadyRegisteredModal";
 import { EmailVerificationModal } from "@/components/auth/EmailVerificationModal";
-import { ProviderMismatchModal } from "@/components/auth/ProviderMismatchModal";
 import {
   RegisterForm,
   RegisterFormValues,
@@ -156,7 +155,6 @@ export default function RegisterPage() {
 
       <EmailVerificationModal />
       <AlreadyRegisteredModal />
-      <ProviderMismatchModal />
     </>
   );
 }
