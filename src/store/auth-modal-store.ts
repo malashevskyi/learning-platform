@@ -1,13 +1,7 @@
 import { create } from "zustand";
 import type { EmailVerificationVariant } from "@/components/auth/EmailVerificationModal";
 
-export type ModalType =
-  | "verification"
-  | "alreadyRegistered"
-  | "verificationError"
-  | "providerMismatch"
-  | "passwordReset"
-  | null;
+export type ModalType = "verification" | "alreadyRegistered" | null;
 
 interface AuthModalState {
   activeModal: ModalType;
@@ -21,9 +15,7 @@ interface AuthModalActions {
     variant: EmailVerificationVariant
   ) => void;
   showAlreadyRegisteredModal: (email: string) => void;
-  showPasswordResetModal: (email?: string) => void;
   closeAllModals: () => void;
-  setRegisteredEmail: (email: string) => void;
 }
 
 type AuthModalStore = AuthModalState & AuthModalActions;
@@ -49,19 +41,8 @@ export const useAuthModalStore = create<AuthModalStore>((set) => ({
       registeredEmail: email,
     }),
 
-  showPasswordResetModal: (email) =>
-    set({
-      activeModal: "passwordReset",
-      registeredEmail: email || "",
-    }),
-
   closeAllModals: () =>
     set({
       activeModal: null,
-    }),
-
-  setRegisteredEmail: (email) =>
-    set({
-      registeredEmail: email,
     }),
 }));
