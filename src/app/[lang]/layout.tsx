@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Rubik, Roboto, Nunito_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { Locale } from "@/i18n/request";
 
 import "../../styles/global.css";
+import { Toaster } from "sonner";
+import { Locale } from "@/i18n/config";
 
 const rubik = Rubik({
   subsets: ["latin", "cyrillic"],
@@ -48,18 +49,15 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: string }>;
 }) {
   return (
-    <html lang={(await params).lang}>
-      <body
-        className={`${rubik.variable} ${roboto.variable} ${nunito.variable} antialiased bg-background text-foreground`}
-      >
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
-      </body>
-    </html>
+    <div
+      className={`${rubik.variable} ${roboto.variable} ${nunito.variable} antialiased bg-background text-foreground`}
+    >
+      <Toaster />
+      <NextIntlClientProvider>{children}</NextIntlClientProvider>
+    </div>
   );
 }

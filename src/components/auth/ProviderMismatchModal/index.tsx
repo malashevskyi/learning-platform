@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { SimpleModal } from "@/components/ui/SimpleModal";
 import { handleError } from "@/lib/error-utils";
 import { supabaseClient } from "@/lib/supabase/client";
+import { getBaseUrl } from "@/lib/utils";
 import { useAuthModalStore } from "@/store/auth-modal-store";
 import { AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -31,7 +32,7 @@ const VARIANT_CONFIG: Record<
 /**
  * Shown when user tries to use the wrong authentication method
  */
-export const ProviderMismatchModal: React.FC = ({}) => {
+export const ProviderMismatchModal: React.FC = () => {
   const t = useTranslations("auth");
   const provider = useAuthModalStore((state) => state.providerMismatchType);
   const activeModal = useAuthModalStore((state) => state.activeModal);
@@ -45,7 +46,7 @@ export const ProviderMismatchModal: React.FC = ({}) => {
         await supabaseClient.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: `${window.location.origin}/api/auth/callback`,
+            redirectTo: `${getBaseUrl()}${ROUTES.AUTH_CALLBACK}`,
           },
         });
       }

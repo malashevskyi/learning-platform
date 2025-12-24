@@ -3,6 +3,7 @@ import { supabaseClient } from "@/lib/supabase/client";
 import { ROUTES } from "@/app/shared/constants/routes";
 import { handleError } from "@/lib/error-utils";
 import { useError } from "@/lib/hooks/useError";
+import { getBaseUrl } from "@/lib/utils";
 
 interface UseForgotPasswordResult {
   isSending: boolean;
@@ -31,7 +32,7 @@ export const useForgotPassword = (): UseForgotPasswordResult => {
         setError(null);
 
         await supabaseClient.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}${ROUTES.PASSWORD_RESET}`,
+          redirectTo: `${getBaseUrl()}${ROUTES.PASSWORD_RESET}`,
         });
 
         setResetSent(true);

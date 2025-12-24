@@ -85,6 +85,7 @@ export const AlreadyRegisteredModal: React.FC = () => {
         {!resetSent ? (
           <>
             <Button
+              data-testid="forgot-password-button"
               variant="outline"
               size="lg"
               onClick={handleForgotPassword}

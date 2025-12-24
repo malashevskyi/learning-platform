@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
-import { i18n } from "@/i18n/request";
+import { i18n } from "@/i18n/config";
 
 export default async function RootPage() {
   const headersList = await headers();

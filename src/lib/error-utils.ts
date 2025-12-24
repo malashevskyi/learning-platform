@@ -8,10 +8,11 @@ import * as Sentry from "@sentry/nextjs";
  */
 interface ErrorHandlerOptions {
   /**
-   * User-friendly message to display in toast
-   * If not provided, a generic error message will be shown
+   * Translation key or direct message to display in toast.
+   * If it starts with a dot (.), it will be treated as a translation key.
+   * Examples: ".errors.network", "Custom error message"
    */
-  message?: string;
+  clientMessage?: string;
 
   /**
    * The error object to log and report
@@ -31,16 +32,6 @@ interface ErrorHandlerOptions {
 }
 
 /**
- * Default error messages
- */
-const DEFAULT_MESSAGES = {
-  GENERIC: "Something went wrong. Please try again.",
-  NETWORK: "Network error. Please check your connection.",
-  UNAUTHORIZED: "You are not authorized to perform this action.",
-  NOT_FOUND: "The requested resource was not found.",
-} as const;
-
-/**
  * Detects if app is running in development mode
  */
 const isDevelopment = (): boolean => {
@@ -55,50 +46,18 @@ const isSentryConfigured = (): boolean => {
 };
 
 /**
- * Gets user-friendly message based on error type
- */
-const getErrorMessage = (error: unknown, customMessage?: string): string => {
-  if (customMessage) return customMessage;
-
-  const errorInstance = ensureError(error);
-
-  // Check for common error patterns
-  if (errorInstance.message.toLowerCase().includes("network")) {
-    return DEFAULT_MESSAGES.NETWORK;
-  }
-
-  if (
-    errorInstance.message.toLowerCase().includes("unauthorized") ||
-    errorInstance.message.toLowerCase().includes("403")
-  ) {
-    return DEFAULT_MESSAGES.UNAUTHORIZED;
-  }
-
-  if (
-    errorInstance.message.toLowerCase().includes("not found") ||
-    errorInstance.message.toLowerCase().includes("404")
-  ) {
-    return DEFAULT_MESSAGES.NOT_FOUND;
-  }
-
-  return DEFAULT_MESSAGES.GENERIC;
-};
-
-/**
- * Logs error to Sentry or console based on environment
+ * Logs error to Sentry or console based on environment.
+ * Always logs full error details for debugging purposes.
  */
 const logError = (error: unknown, context?: Record<string, unknown>): void => {
-  const errorInstance = ensureError(error);
   const normalized = serializeError(error);
 
   if (isDevelopment()) {
     // Development: log to console with full details
-    console.error("[Error Handler] Error occurred:", {
-      message: errorInstance.message,
-      stack: errorInstance.stack,
-      context,
-      originalError: error,
-    });
+    console.error(
+      "[Error Handler] Error occurred:",
+      JSON.stringify(normalized, null, 2)
+    );
   } else if (isSentryConfigured()) {
     // Production: send to Sentry
     Sentry.captureException(normalized, {
@@ -111,112 +70,59 @@ const logError = (error: unknown, context?: Record<string, unknown>): void => {
     });
   } else {
     // Production without Sentry: at least log to console
-    console.error("[Error Handler] Error occurred:", errorInstance.message);
+    console.error(
+      "[Error Handler] Error occurred:",
+      JSON.stringify(normalized, null, 2)
+    );
   }
 };
 
 /**
- * Universal error handler
+ * Universal error handler for background/logging errors.
  *
- * Handles errors by:
- * - Showing user-friendly toast notification
- * - Logging to console (dev) or Sentry (production)
- * - Normalizing error format
+ * This function is designed for errors that need to be logged but may not need
+ * user-facing UI (toasts). It always logs to Sentry/console.
  *
  * @example
  * ```typescript
- * try {
- *   await fetchData();
- * } catch (error) {
- *   handleError({
- *     message: "Failed to fetch data",
- *     error,
- *     context: { userId: user.id }
- *   });
- * }
+ * // Log error without showing toast (handled in UI)
+ * handleError({
+ *   error,
+ *   showToast: false,
+ *   context: { userId: user.id }
+ * });
  * ```
  *
  * @example
  * ```typescript
- * // Show only toast without logging
+ * // Show toast with custom message and log
  * handleError({
- *   message: "Please fill in all required fields"
+ *   clientMessage: "Failed to load data",
+ *   error,
  * });
  * ```
  */
 export const handleError = ({
-  message,
+  clientMessage,
   error,
   context,
   showToast = true,
 }: ErrorHandlerOptions): void => {
-  // Get appropriate user message
-  const userMessage = getErrorMessage(error, message);
+  logError(error, context);
 
   // Show toast notification if enabled
-  if (showToast) {
+  if (showToast || clientMessage) {
+    const errorInstance = error ? ensureError(error) : null;
+
+    // Use custom message if provided, otherwise use error message or fallback
+    const userMessage =
+      clientMessage ||
+      errorInstance?.message ||
+      "Something went wrong. Please try again.";
+
     toast.error(userMessage, {
       duration: 5000,
       closeButton: true,
     });
-  }
-
-  // Log error if provided
-  if (error) {
-    logError(error, context);
-  }
-};
-
-/**
- * Async wrapper that automatically handles errors
- *
- * @example
- * ```typescript
- * const handleSubmit = withErrorHandler(
- *   async (data) => {
- *     await saveData(data);
- *     toast.success("Saved!");
- *   },
- *   { message: "Failed to save data" }
- * );
- * ```
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const withErrorHandler = <T extends (...args: any[]) => Promise<any>>(
-  fn: T,
-  options?: Omit<ErrorHandlerOptions, "error">
-): T => {
-  return (async (...args: Parameters<T>) => {
-    try {
-      return await fn(...args);
-    } catch (error) {
-      handleError({
-        ...options,
-        error,
-      });
-      throw error; // Re-throw for further handling if needed
-    }
-  }) as T;
-};
-
-/**
- * Helper to check if error is a specific type
- */
-export const isErrorType = (
-  error: unknown,
-  type: "network" | "auth" | "notfound"
-): boolean => {
-  const errorInstance = ensureError(error);
-  const message = errorInstance.message.toLowerCase();
-
-  switch (type) {
-    case "network":
-      return message.includes("network") || message.includes("fetch");
-    case "auth":
-      return message.includes("unauthorized") || message.includes("403");
-    case "notfound":
-      return message.includes("not found") || message.includes("404");
-    default:
-      return false;
   }
 };

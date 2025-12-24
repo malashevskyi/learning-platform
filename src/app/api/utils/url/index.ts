@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import queryString from "query-string";
 import { logger } from "../logger";
-import { i18n, isLocale, Locale } from "@/i18n/request";
+import { i18n, isLocale, Locale } from "@/i18n/config";
 
 export const getCurrentLocale = (request: NextRequest): Locale => {
   if (isLocale(request.nextUrl.locale)) {
@@ -51,7 +51,7 @@ export function getBaseUrl(request: Request): string {
  * @returns A safe redirect path (always relative)
  */
 export function getSafeRedirect(
-  next: string | null,
+  next?: string | null,
   fallback?: string
 ): string {
   if (!next && fallback) return getSafeRedirect(fallback);

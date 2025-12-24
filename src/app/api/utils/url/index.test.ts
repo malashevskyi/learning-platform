@@ -1,5 +1,5 @@
 import { getLocalizedPath, getSafeRedirect } from "@/app/api/utils/url";
-import { i18n } from "@/i18n/request";
+import { i18n } from "@/i18n/config";
 
 describe("getSafeRedirect with locales", () => {
   it("handles locale-prefixed paths", () => {

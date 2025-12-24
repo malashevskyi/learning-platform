@@ -1,4 +1,3 @@
-import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 import {
@@ -8,10 +7,8 @@ import {
   getSafeRedirect,
   redirectWithError,
 } from "../../utils/url";
-
-const DEFAULT_AUTH_REDIRECT = "/learn";
-const ONBOARDING_PATH = "/onboarding";
-const ERROR_REDIRECT_PATH = "/login";
+import { logger } from "../../utils/logger";
+import { ROUTES } from "@/app/shared/constants/routes";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -24,17 +21,24 @@ export async function GET(request: NextRequest) {
     return redirectWithError({
       locale: currentLocale,
       baseUrl,
-      redirectPath: ERROR_REDIRECT_PATH,
+      redirectPath: ROUTES.UNAUTHENTICATED_REDIRECT,
       message:
         searchParams.get("error_description") || "Could not authenticate user",
       code: searchParams.get("error_code"),
       errorType: error,
+      context: {
+        url: request.url,
+        referrer: request.headers.get("referer"),
+      },
     });
   }
 
   const code = searchParams.get("code");
 
-  const next = getSafeRedirect(searchParams.get("next"), DEFAULT_AUTH_REDIRECT);
+  const next = getSafeRedirect(
+    searchParams.get("next"),
+    ROUTES.DEFAULT_AUTH_REDIRECT
+  );
 
   if (code) {
     const supabase = await createClient();
@@ -44,7 +48,7 @@ export async function GET(request: NextRequest) {
       return redirectWithError({
         locale: currentLocale,
         baseUrl,
-        redirectPath: ERROR_REDIRECT_PATH,
+        redirectPath: ROUTES.UNAUTHENTICATED_REDIRECT,
         message: error.message || "Could not authenticate user",
         errorType: error.name,
         context: {
@@ -74,7 +78,7 @@ export async function GET(request: NextRequest) {
     }
 
     const isProfileComplete = Boolean(profile?.full_name);
-    const redirectPath = isProfileComplete ? next : ONBOARDING_PATH;
+    const redirectPath = isProfileComplete ? next : ROUTES.ONBOARDING;
 
     const redirectUrl = new URL(baseUrl);
     redirectUrl.pathname = getLocalizedPath(redirectPath, currentLocale);
@@ -85,7 +89,8 @@ export async function GET(request: NextRequest) {
   return redirectWithError({
     locale: currentLocale,
     baseUrl,
-    redirectPath: ERROR_REDIRECT_PATH,
+    errorType: "missing_code",
+    redirectPath: ROUTES.UNAUTHENTICATED_REDIRECT,
     message: "Could not authenticate user",
   });
 }
