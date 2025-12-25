@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 import "../../styles/global.css";
 import { Toaster } from "sonner";
 import { Locale } from "@/i18n/config";
+import { ReactQueryProvider } from "@/components/providers/ReactQueryProvider";
 
 const rubik = Rubik({
   subsets: ["latin", "cyrillic"],
@@ -57,7 +58,9 @@ export default async function RootLayout({
       className={`${rubik.variable} ${roboto.variable} ${nunito.variable} antialiased bg-background text-foreground`}
     >
       <Toaster />
-      <NextIntlClientProvider>{children}</NextIntlClientProvider>
+      <NextIntlClientProvider>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </NextIntlClientProvider>
     </div>
   );
 }

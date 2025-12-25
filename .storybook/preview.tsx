@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import type { Preview } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
@@ -81,7 +82,9 @@ const preview: Preview = {
           console.error(error);
         }}
       >
-        <Story />
+        <QueryClientProvider client={new QueryClient()}>
+          <Story />
+        </QueryClientProvider>
       </NextIntlClientProvider>
     ),
   ],

@@ -18,10 +18,12 @@
     "@storybook/test": "^8.6.14",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.87.1",
+    "@tanstack/react-query": "^5.90.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "ensure-error": "^5.0.0",
     "formik": "^2.4.9",
+    "import-in-the-middle": "^2.0.1",
     "lucide-react": "^0.560.0",
     "msw": "^2.12.4",
     "msw-storybook-addon": "^2.0.6",
@@ -33,6 +35,7 @@
     "react-google-button": "^0.8.0",
     "react-icons": "^5.5.0",
     "react-use": "^17.6.0",
+    "require-in-the-middle": "^8.0.1",
     "serialize-error": "^12.0.0",
     "shadcn-ui": "^0.9.5",
     "sonner": "^2.0.7",
@@ -40,6 +43,7 @@
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
     "yup": "^1.7.1",
+    "zod": "^4.2.1",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
