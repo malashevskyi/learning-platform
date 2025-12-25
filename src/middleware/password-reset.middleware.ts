@@ -5,6 +5,7 @@ import {
   getLocalizedPath,
 } from "@/app/api/utils/url";
 import { ROUTES } from "@/app/shared/constants/routes";
+import { parseAuthCallback } from "@/app/api/utils/auth/auth-parser";
 
 /**
  * Middleware to detect password reset error params on any page
@@ -18,17 +19,19 @@ export async function withPasswordResetErrorRedirect(
   request: NextRequest,
   response: NextResponse
 ): Promise<NextResponse> {
-  const { searchParams, pathname, hash } = request.nextUrl;
+  const { pathname, hash } = request.nextUrl;
+  const { error, errorCode, errorDescription } = parseAuthCallback(request);
 
   // Skip if already on password reset page
   if (pathname.includes(ROUTES.PASSWORD_RESET)) {
     return response;
   }
 
-  // Check for Supabase auth error params that indicate expired/invalid password reset
-  const error = searchParams.get("error");
-  const errorCode = searchParams.get("error_code");
-  const errorDescription = searchParams.get("error_description");
+  // TODO: consider do we need to redirect the user to the password reset page
+  // If so, we should include the error params in the redirect, now we delete them
+  // on client side once we detect that there is an error
+  // we need either to not delete them or save to cookies or allow user to go to other pages
+  return response;
 
   // Check if this is a password reset related error
   const isPasswordResetError =
@@ -47,13 +50,13 @@ export async function withPasswordResetErrorRedirect(
     );
 
     // Forward the error params to the password reset page
-    redirectUrl.searchParams.set("error", error);
-    if (errorCode) {
-      redirectUrl.searchParams.set("error_code", errorCode);
-    }
-    if (errorDescription) {
-      redirectUrl.searchParams.set("error_description", errorDescription);
-    }
+    // redirectUrl.searchParams.set("error", error);
+    // if (errorCode) {
+    //   redirectUrl.searchParams.set("error_code", errorCode);
+    // }
+    // if (errorDescription) {
+    //   redirectUrl.searchParams.set("error_description", errorDescription);
+    // }
 
     // Also preserve any hash fragment
     if (hash) {

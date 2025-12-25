@@ -42,8 +42,13 @@ export async function withProfileCheck(
   request: NextRequest,
   response: NextResponse
 ): Promise<NextResponse> {
-  const pathname = getSafeRedirect(request.nextUrl.pathname);
+  // GUARD: If we are in the middle of a password reset, STOP.
+  // Do not check profiles. Do not redirect to onboarding.
+  if (request.cookies.has(COOKIE_NAMES.PASSWORD_RECOVERY)) {
+    return response;
+  }
 
+  const pathname = getSafeRedirect(request.nextUrl.pathname);
   const supabase = createMiddlewareClient(request, response);
 
   const {

@@ -54,7 +54,9 @@
       "email_verification_failed": "Не вдалося надіслати лист підтвердження",
       "profile_check_failed": "Не вдалося перевірити статус профілю",
       "session_check_failed": "Не вдалося перевірити існуючу сесію",
-      "email_required": "Електронна пошта обов'язкова"
+      "email_required": "Електронна пошта обов'язкова",
+      "update_password_failed": "Не вдалося оновити пароль. Спробуйте ще раз.",
+      "password_same_as_old": "Новий пароль повинен відрізнятися від старого."
     },
     "success": {
       "signed_in": "Успішний вхід",
@@ -72,6 +74,7 @@
     "account_exists_verify_email_message": "Акаунт з <highlight>{email}</highlight> вже існує, але не підтверджений. Перевірте поштову скриньку для листа з підтвердженням.",
     "login_verify_email_title": "Будь ласка, підтвердіть електронну пошту",
     "login_verify_email_message": "Ваш акаунт з <highlight>{email}</highlight> ще не підтверджений. Перевірте поштову скриньку та натисніть посилання для підтвердження, щоб продовжити.",
+    "remembered_password_label": "Якщо ти згадав пароль, просто увійди",
     "go_to_login": "Перейти до входу",
     "forgot_password": "Забули пароль",
     "forgot_password_title": "Скиньте пароль",

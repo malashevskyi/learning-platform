@@ -5,10 +5,9 @@ import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
 import { Button } from "@/components/ui/Button";
 import { PasswordInput } from "@/components/input/PasswordInput";
-import { supabaseClient } from "@/lib/supabase/client";
 import { ROUTES } from "@/app/shared/constants/routes";
-import { useError } from "@/lib/hooks/useError";
 import { getValidationSchema } from "./getValidationSchema";
+import { useUpdatePassword } from "@/lib/hooks/auth/useUpdatePassword";
 import Link from "next/link";
 
 export interface UpdatePasswordFormProps {
@@ -19,10 +18,8 @@ export const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
   initialShowSuccess = false,
 }) => {
   const t = useTranslations("auth");
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
-  const [showSuccess, setShowSuccess] = React.useState(initialShowSuccess);
-  const { getErrorMessage } = useError("auth");
+  const { isUpdating, updateSuccess, updateError, updatePassword } =
+    useUpdatePassword();
 
   const validationSchema = getValidationSchema({
     errors: {
@@ -39,30 +36,14 @@ export const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values) => {
-      setLoading(true);
-      setError(null);
-      try {
-        const { error: updateError } = await supabaseClient.auth.updateUser({
-          password: values.password,
-        });
-
-        if (updateError) throw updateError;
-
-        // Sign out the user after password update
-        await supabaseClient.auth.signOut();
-        setShowSuccess(true);
-      } catch (err) {
-        setError(getErrorMessage(err));
-      } finally {
-        setLoading(false);
-      }
+      updatePassword(values.password);
     },
   });
 
-  const isSubmitDisabled = loading || !formik.isValid || !formik.dirty;
+  const isSubmitDisabled = isUpdating || !formik.isValid || !formik.dirty;
 
-  // Show success notification instead of modal
-  if (showSuccess) {
+  // Show success notification
+  if (updateSuccess || initialShowSuccess) {
     return (
       <div className="flex flex-col items-center text-center gap-6">
         <div className="text-primary">
@@ -99,21 +80,36 @@ export const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
   }
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-3 w-full max-w-md mx-auto"
-    >
-      <PasswordInput
-        id="password"
-        {...formik.getFieldProps("password")}
-        error={formik.errors.password}
-        touched={formik.touched.password}
-      />
-      {error && <div className="text-sm text-destructive">{error}</div>}
-      <Button type="submit" disabled={isSubmitDisabled} loading={loading}>
-        {t("update_password_button")}
-      </Button>
-    </form>
+    <>
+      <form
+        onSubmit={formik.handleSubmit}
+        className="flex flex-col gap-3 w-full max-w-md mx-auto"
+      >
+        <PasswordInput
+          id="password"
+          {...formik.getFieldProps("password")}
+          error={formik.errors.password}
+          touched={formik.touched.password}
+        />
+        {updateError && (
+          <div className="text-sm text-destructive">{updateError}</div>
+        )}
+
+        <Button type="submit" disabled={isSubmitDisabled} loading={isUpdating}>
+          {t("update_password_button")}
+        </Button>
+      </form>
+      <div className="flex flex-col items-center gap-2 pt-4 border-t border-border">
+        <span className="text-sm text-muted-foreground">
+          {t("remembered_password_label")}
+        </span>
+        <Button asChild variant="navigation">
+          <Link href={ROUTES.LOGIN} replace>
+            {t("go_to_login")}
+          </Link>
+        </Button>
+      </div>
+    </>
   );
 };
 

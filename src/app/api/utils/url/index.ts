@@ -102,6 +102,7 @@ interface RedirectWithErrorOptions {
   errorType?: string | null;
   /** Additional context for logging (won't be shown to user) */
   context?: Record<string, unknown>;
+  responseType?: "redirect" | "json";
 }
 
 /**
@@ -112,8 +113,16 @@ interface RedirectWithErrorOptions {
 export function redirectWithError(
   options: RedirectWithErrorOptions
 ): NextResponse {
-  const { locale, baseUrl, redirectPath, message, code, errorType, context } =
-    options;
+  const {
+    locale,
+    baseUrl,
+    redirectPath,
+    message,
+    code,
+    errorType,
+    context,
+    responseType = "redirect",
+  } = options;
 
   logger.error("Auth redirect with error", {
     message,
@@ -122,6 +131,18 @@ export function redirectWithError(
     redirectPath,
     ...context,
   });
+
+  if (responseType === "json") {
+    return NextResponse.json(
+      {
+        success: false,
+        message,
+        type: errorType,
+        code,
+      },
+      { status: 400 }
+    );
+  }
 
   const url = queryString.stringifyUrl(
     {

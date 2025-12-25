@@ -8,6 +8,7 @@ import {
 } from "@/app/api/utils/url";
 import { isPublicRoute } from "./utils";
 import { ROUTES } from "@/app/shared/constants/routes";
+import { COOKIE_NAMES } from "@/app/shared/constants/auth";
 
 async function handleUnauthenticated(
   request: NextRequest,
@@ -43,9 +44,12 @@ export async function withAuth(
     return response;
   }
 
-  // Skip if just redirected from callback
-  const referer = request.headers.get("referer") || "";
-  if (referer.includes(ROUTES.AUTH_CALLBACK)) {
+  const isFromCallback = request.cookies.has(
+    COOKIE_NAMES.AUTH_CALLBACK_PROCESSING
+  );
+
+  if (isFromCallback) {
+    response.cookies.delete(COOKIE_NAMES.AUTH_CALLBACK_PROCESSING);
     return response;
   }
 

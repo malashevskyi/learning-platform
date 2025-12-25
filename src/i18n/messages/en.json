@@ -49,7 +49,9 @@
       "google_signup_failed": "Failed to create an account with Google. Please try again.",
       "password_reset_failed": "Failed to send password reset email. Please try again.",
       "email_verification_required": "Please verify your email address to continue.",
-      "email_required": "Email is required"
+      "email_required": "Email is required",
+      "update_password_failed": "Failed to update password. Please try again.",
+      "password_same_as_old": "Your new password must be different from your current one."
     },
     "success": {
       "signed_in": "Signed in successfully",
@@ -67,6 +69,7 @@
     "login_verify_email_title": "Please Verify Your Email",
     "login_verify_email_message": "Your account with <highlight>{email}</highlight> is not verified yet. Please check your inbox and click the verification link to continue.",
     "go_to_login": "Go to Login",
+    "remembered_password_label": "If you remembered the password, just log in",
     "forgot_password": "Forgot Password",
     "forgot_password_title": "Reset Your Password",
     "forgot_password_message": "Enter your email address and we'll send you a link to reset your password.",

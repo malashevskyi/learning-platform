@@ -32,6 +32,7 @@ export const useForgotPassword = (): UseForgotPasswordResult => {
         setError(null);
 
         await supabaseClient.auth.resetPasswordForEmail(email, {
+          // TODO: consider to redirect to /api/auth/callback?type=recovery
           redirectTo: `${getBaseUrl()}${ROUTES.PASSWORD_RESET}`,
         });
 
