@@ -1,9 +1,9 @@
-import {withSentryConfig} from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ["import-in-the-middle", "require-in-the-middle"],
 };
 
 const withNextIntl = createNextIntlPlugin();
@@ -37,5 +37,5 @@ export default withSentryConfig(withNextIntl(nextConfig), {
   // See the following for more information:
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: true
+  automaticVercelMonitors: true,
 });
