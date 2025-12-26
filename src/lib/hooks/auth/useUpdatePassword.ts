@@ -1,7 +1,9 @@
-import { handleError } from "@/lib/error-utils";
+import { API_ERROR_CODES } from "@/app/shared/constants/errors";
+import { FEATURES } from "@/app/shared/constants/features";
+import { authService, AuthServiceError } from "@/lib/api/services/auth.service";
+import type { UpdatePasswordResponse } from "@/lib/api/types/auth.types";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 
 interface UseUpdatePasswordResult {
   isUpdating: boolean;
@@ -18,33 +20,36 @@ interface UseUpdatePasswordResult {
 export const useUpdatePassword = (): UseUpdatePasswordResult => {
   const t = useTranslations("auth.errors");
 
-  const mutation = useMutation({
-    mutationFn: async (password: string) => {
-      const response = await fetch("/api/auth/update-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || t("update_password_failed"));
-      }
-
-      return response;
+  const mutation = useMutation<
+    UpdatePasswordResponse,
+    AuthServiceError,
+    string
+  >({
+    mutationFn: authService.updatePassword,
+    meta: {
+      feature: FEATURES.AUTH.PASSWORD_UPDATE,
     },
   });
 
-  useEffect(() => {
-    handleError({ error: mutation.error, showToast: false });
-  }, [mutation.error]);
+  /**
+   * Get user-friendly error message based on error code
+   */
+  const getClientErrorMessage = (): string | null => {
+    if (!mutation.error) return null;
+
+    // Handle specific error codes
+    if (mutation.error.code === API_ERROR_CODES.AUTH.SAME_PASSWORD) {
+      return t("password_same_as_old");
+    }
+
+    // Generic password update failure
+    return t("update_password_failed");
+  };
 
   return {
     isUpdating: mutation.isPending,
     updateSuccess: mutation.isSuccess,
-    updateError: null,
+    updateError: getClientErrorMessage(),
     updatePassword: mutation.mutate,
     reset: mutation.reset,
   };

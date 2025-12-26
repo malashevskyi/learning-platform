@@ -11,12 +11,18 @@ export const ROUTES = {
   SETTINGS: "/settings",
 
   // Auth routes
-  AUTH_CALLBACK: "/api/auth/callback",
   PASSWORD_RESET: "/password-reset",
   DEFAULT_AUTH_REDIRECT: "/learn", // ROUTES.LEARN
   UNAUTHENTICATED_REDIRECT: "/login", // ROUTES.LOGIN
-  AUTH_SIGN_OUT: "/api/auth/sign-out",
   UPDATE_PASSWORD: "/update-password",
+} as const;
+
+export const API_ROUTES = {
+  AUTH: {
+    UPDATE_PASSWORD: "/api/auth/update-password",
+    CALLBACK: "/api/auth/callback",
+    SIGN_OUT: "/api/auth/sign-out",
+  },
 } as const;
 
 export const PUBLIC_ROUTES = [
