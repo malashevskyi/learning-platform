@@ -7,7 +7,7 @@ import {
   getSafeRedirect,
 } from "@/app/api/utils/url";
 import { isPublicRoute } from "./utils";
-import { ROUTES } from "@/app/shared/constants/routes";
+import { API_ROUTES, ROUTES } from "@/app/shared/constants/routes";
 import { COOKIE_NAMES } from "@/app/shared/constants/auth";
 
 async function handleUnauthenticated(
@@ -40,7 +40,7 @@ export async function withAuth(
   }
 
   // Auth callback should be publicly accessible
-  if (pathname === ROUTES.AUTH_CALLBACK) {
+  if (pathname === API_ROUTES.AUTH.CALLBACK) {
     return response;
   }
 

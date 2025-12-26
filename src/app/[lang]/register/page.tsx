@@ -1,7 +1,7 @@
 "use client";
 
-import { SUPABASE_ERROR_CODES } from "@/app/shared/constants/auth";
-import { ROUTES } from "@/app/shared/constants/routes";
+import { API_ERROR_CODES } from "@/app/shared/constants/errors";
+import { API_ROUTES } from "@/app/shared/constants/routes";
 import { AlreadyRegisteredModal } from "@/components/auth/AlreadyRegisteredModal";
 import { EmailVerificationModal } from "@/components/auth/EmailVerificationModal";
 import {
@@ -59,7 +59,7 @@ export default function RegisterPage() {
         email: values.email,
         password: values.password,
         options: {
-          emailRedirectTo: `${getBaseUrl()}${ROUTES.AUTH_CALLBACK}`,
+          emailRedirectTo: `${getBaseUrl()}${API_ROUTES.AUTH.CALLBACK}`,
           data: {
             email: values.email,
           },
@@ -91,7 +91,7 @@ export default function RegisterPage() {
       if (loginError) {
         if (
           loginError.message?.toLowerCase().includes("email not confirmed") ||
-          loginError.code === SUPABASE_ERROR_CODES.EMAIL_NOT_CONFIRMED
+          loginError.code === API_ERROR_CODES.AUTH.EMAIL_NOT_CONFIRMED
         ) {
           handleError({
             error: loginError,

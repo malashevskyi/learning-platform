@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import GoogleButton from "react-google-button";
 import { supabaseClient } from "@/lib/supabase/client";
 import { handleError } from "@/lib/error-utils";
-import { ROUTES } from "@/app/shared/constants/routes";
+import { API_ROUTES } from "@/app/shared/constants/routes";
 import { getBaseUrl } from "@/lib/utils";
 
 export interface GoogleAuthProps {
@@ -20,7 +20,7 @@ export const GoogleAuth: React.FC<GoogleAuthProps> = ({ label }) => {
       await supabaseClient.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${getBaseUrl()}${ROUTES.AUTH_CALLBACK}`,
+          redirectTo: `${getBaseUrl()}${API_ROUTES.AUTH.CALLBACK}`,
         },
       });
     } catch (error) {

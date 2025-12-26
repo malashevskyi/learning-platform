@@ -1,6 +1,6 @@
 "use client";
 
-import { SUPABASE_ERROR_CODES } from "@/app/shared/constants/auth";
+import { API_ERROR_CODES } from "@/app/shared/constants/errors";
 import { ROUTES } from "@/app/shared/constants/routes";
 import { EmailVerificationModal } from "@/components/auth/EmailVerificationModal";
 import { LoginForm, LoginFormValues } from "@/components/auth/LoginForm";
@@ -56,7 +56,7 @@ export default function LoginPage() {
         // Check for email not verified
         if (
           error instanceof AuthError &&
-          (error.code === SUPABASE_ERROR_CODES.EMAIL_NOT_CONFIRMED ||
+          (error.code === API_ERROR_CODES.AUTH.EMAIL_NOT_CONFIRMED ||
             error.message?.toLowerCase().includes("email not confirmed"))
         ) {
           handleError({
@@ -70,7 +70,7 @@ export default function LoginPage() {
         // Check for invalid credentials - show forgot password option
         if (
           error instanceof AuthError &&
-          (error.code === SUPABASE_ERROR_CODES.INVALID_CREDENTIALS ||
+          (error.code === API_ERROR_CODES.AUTH.INVALID_CREDENTIALS ||
             error.message?.toLowerCase().includes("invalid login credentials"))
         ) {
           setLoginError(getErrorMessage(error));
