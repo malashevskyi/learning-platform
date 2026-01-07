@@ -71,7 +71,6 @@ export async function withProfileCheck(
   let isProfileComplete = cachedComplete === "true";
 
   if (!isProfileComplete) {
-    const supabase = createMiddlewareClient(request, response);
     const { data: profile } = await supabase
       .from("user_profiles")
       .select("full_name")

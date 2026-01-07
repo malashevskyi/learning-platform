@@ -16,6 +16,19 @@ async function handleUnauthenticated(
 ): Promise<NextResponse> {
   const currentLocale = getCurrentLocale(request);
   const baseUrl = getBaseUrl(request);
+  const isApiRoute = pathname.startsWith("/api");
+
+  if (isApiRoute) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Unauthorized",
+        type: "auth_error",
+        code: null,
+      },
+      { status: 401 }
+    );
+  }
 
   const redirectUrl = new URL(
     getLocalizedPath(ROUTES.UNAUTHENTICATED_REDIRECT, currentLocale),

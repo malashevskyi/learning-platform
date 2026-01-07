@@ -135,7 +135,25 @@
     "continue": "Продовжити",
     "lessons": "{count} уроків",
     "completed": "Завершено",
-
     "open": "Відкрити курс"
+  },
+  "onboarding": {
+    "title": "Заповніть свій профіль",
+    "description": "Допоможіть нам персоналізувати ваш досвід навчання",
+    "full_name_label": "Повне ім'я",
+    "full_name_placeholder": "Введіть ваше повне ім'я",
+    "native_language_label": "Бажана мова",
+    "native_language_placeholder": "Оберіть мову",
+    "save": "Зберегти та продовжити",
+    "saving": "Збереження...",
+    "errors": {
+      "required": "Це поле обов'язкове",
+      "full_name_too_short": "Повне ім'я має містити принаймні 3 символи",
+      "invalid_language": "Будь ласка, оберіть дійсну мову",
+      "save_failed": "Не вдалося зберегти профіль. Спробуйте ще раз."
+    },
+    "success": {
+      "profile_saved": "Профіль успішно збережено"
+    }
   }
 }

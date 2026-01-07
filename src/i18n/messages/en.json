@@ -129,5 +129,24 @@
   "home": {
     "title": "Welcome to Learning Platform",
     "auth_prompt": "Please log in or create an account to get started"
+  },
+  "onboarding": {
+    "title": "Complete Your Profile",
+    "description": "Help us personalize your learning experience",
+    "full_name_label": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+    "native_language_label": "Preferred Language",
+    "native_language_placeholder": "Select your language",
+    "save": "Save and Continue",
+    "saving": "Saving...",
+    "errors": {
+      "required": "This field is required",
+      "full_name_too_short": "Full name must be at least 3 characters",
+      "invalid_language": "Please select a valid language",
+      "save_failed": "Failed to save profile. Please try again."
+    },
+    "success": {
+      "profile_saved": "Profile saved successfully"
+    }
   }
 }

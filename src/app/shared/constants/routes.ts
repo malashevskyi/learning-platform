@@ -23,6 +23,7 @@ export const API_ROUTES = {
     CALLBACK: "/api/auth/callback",
     SIGN_OUT: "/api/auth/sign-out",
   },
+  PROFILE: "/api/profile",
 } as const;
 
 export const PUBLIC_ROUTES = [

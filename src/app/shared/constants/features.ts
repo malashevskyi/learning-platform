@@ -6,6 +6,7 @@ export const FEATURES = {
     PASSWORD_RESET_REQUEST: "auth-password-reset-request",
   },
   USER: {
+    PROFILE_GET: "user-profile-get",
     PROFILE_UPDATE: "user-profile-update",
   },
   UNKNOWN_FEATURE: "unknown-feature",
