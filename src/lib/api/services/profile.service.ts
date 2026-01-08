@@ -1,4 +1,3 @@
-import { logger } from "@/app/api/utils/logger";
 import { API_ROUTES } from "@/app/shared/constants/routes";
 import { api } from "../axios-client";
 import {
@@ -8,18 +7,12 @@ import {
   UpdateProfileResponseSchema,
   type UpdateProfileRequest,
 } from "../types/profile.types";
-import { treeifyError } from "zod/v4/core";
 import {
   API_ERROR_TYPES,
   INTERNAL_ERROR_CODES,
 } from "@/app/shared/constants/errors";
-
-export class ProfileServiceError extends Error {
-  constructor(message: string, public code: string, public type: string) {
-    super(message);
-    this.name = "ProfileServiceError";
-  }
-}
+import { ApiServiceError } from "../error";
+import { treeifyError } from "zod/v4/core";
 
 /**
  * Profile service - handles all profile-related API calls
@@ -28,7 +21,7 @@ export const profileService = {
   /**
    * Get user profile
    * @returns Promise resolving to user profile
-   * @throws {ProfileServiceError} When profile fetch fails
+   * @throws {ApiServiceError} When profile fetch fails
    */
   getProfile: async (): Promise<ProfileSuccessResponse> => {
     const response = await api.get(API_ROUTES.PROFILE);
@@ -36,14 +29,14 @@ export const profileService = {
     const result = ProfileSuccessSchema.safeParse(response.data);
 
     if (!result.success) {
-      logger.error("API Contract Violation - Profile Get", {
-        errors: treeifyError(result.error),
-        raw: response.data,
-      });
-      throw new ProfileServiceError(
+      throw new ApiServiceError(
         "Malformed response",
         INTERNAL_ERROR_CODES.PARSE_ERROR,
-        API_ERROR_TYPES.INTERNAL
+        API_ERROR_TYPES.INTERNAL,
+        {
+          validationErrors: treeifyError(result.error),
+          rawResponse: response.data,
+        }
       );
     }
 
@@ -64,20 +57,20 @@ export const profileService = {
     const result = UpdateProfileResponseSchema.safeParse(response.data);
 
     if (!result.success) {
-      logger.error("API Contract Violation - Profile Update", {
-        errors: treeifyError(result.error),
-        raw: response.data,
-      });
-      throw new ProfileServiceError(
+      throw new ApiServiceError(
         "Malformed response",
         INTERNAL_ERROR_CODES.PARSE_ERROR,
-        API_ERROR_TYPES.INTERNAL
+        API_ERROR_TYPES.INTERNAL,
+        {
+          validationErrors: treeifyError(result.error),
+          rawResponse: response.data,
+        }
       );
     }
     const parsedData = result.data;
 
     if (parsedData.success === false) {
-      throw new ProfileServiceError(
+      throw new ApiServiceError(
         parsedData.message,
         parsedData.code,
         parsedData.type

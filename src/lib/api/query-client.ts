@@ -1,6 +1,7 @@
 import { QueryClient, MutationCache, QueryCache } from "@tanstack/react-query";
 import { handleError } from "@/lib/error-utils";
 import { FeatureName, FEATURES } from "@/app/shared/constants/features";
+import { ApiServiceError } from "./error";
 
 declare module "@tanstack/react-query" {
   interface Register {
@@ -22,8 +23,20 @@ export const createQueryClient = () =>
       onError: (error, _variables, _context, mutation) => {
         const feature =
           (mutation.meta?.feature as string) || FEATURES.UNKNOWN_FEATURE;
+
+        let context: Record<string, unknown> = { feature };
+
+        if (error instanceof ApiServiceError) {
+          context = {
+            ...context,
+            ...error.context,
+            code: error.code,
+            type: error.type,
+          };
+        }
+
         // Every time ANY mutation fails, log to Sentry automatically
-        handleError({ error, context: { feature }, showToast: false });
+        handleError({ error, context, showToast: false });
       },
     }),
     queryCache: new QueryCache({

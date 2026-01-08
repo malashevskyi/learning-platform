@@ -18,7 +18,7 @@ export default function OnboardingPage() {
   const t = useTranslations("onboarding");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { profile, isLoading: isFetching, error: fetchError } = useProfile();
+  const { profile, isLoading: isFetching } = useProfile();
   const { isUpdating, updateSuccess, updateError, updateProfile } =
     useUpdateProfile();
   const pendingRedirect = useRedirectStore((state) => state.pendingRedirect);
@@ -73,7 +73,7 @@ export default function OnboardingPage() {
           initialValues={initialValues}
           onSubmit={handleSubmit}
           isLoading={isUpdating}
-          formError={fetchError || updateError || ""}
+          formError={updateError}
         />
       </div>
     </div>

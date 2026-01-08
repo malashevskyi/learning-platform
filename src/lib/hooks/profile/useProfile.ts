@@ -1,8 +1,5 @@
 import { FEATURES } from "@/app/shared/constants/features";
-import {
-  profileService,
-  ProfileServiceError,
-} from "@/lib/api/services/profile.service";
+import { profileService } from "@/lib/api/services/profile.service";
 import type {
   ProfileSuccessResponse,
   UpdateProfileRequest,
@@ -11,6 +8,7 @@ import type {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { API_ERROR_CODES } from "@/app/shared/constants/errors";
+import { ApiServiceError } from "@/lib/api/error";
 
 interface UseProfileResult {
   profile: ProfileSuccessResponse | undefined;
@@ -24,7 +22,7 @@ interface UseProfileResult {
 export const useProfile = (): UseProfileResult => {
   const t = useTranslations("onboarding.errors");
 
-  const query = useQuery<ProfileSuccessResponse, ProfileServiceError>({
+  const query = useQuery<ProfileSuccessResponse, ApiServiceError>({
     queryKey: ["profile"],
     queryFn: profileService.getProfile,
     meta: {
@@ -53,7 +51,7 @@ export const useProfile = (): UseProfileResult => {
 interface UseUpdateProfileResult {
   isUpdating: boolean;
   updateSuccess: boolean;
-  updateError: string | null;
+  updateError: string | undefined;
   updateProfile: (data: UpdateProfileRequest) => void;
   reset: () => void;
 }
@@ -66,7 +64,7 @@ export const useUpdateProfile = (): UseUpdateProfileResult => {
 
   const mutation = useMutation<
     UpdateProfileResponse,
-    ProfileServiceError,
+    ApiServiceError,
     UpdateProfileRequest
   >({
     mutationFn: profileService.updateProfile,
@@ -75,8 +73,8 @@ export const useUpdateProfile = (): UseUpdateProfileResult => {
     },
   });
 
-  const getClientErrorMessage = (): string | null => {
-    if (!mutation.error) return null;
+  const getClientErrorMessage = (): string | undefined => {
+    if (!mutation.error) return undefined;
     return t("save_failed");
   };
 

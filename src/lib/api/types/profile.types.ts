@@ -44,7 +44,7 @@ export const ProfileErrorSchema = z.object({
   success: z.literal(false),
   message: z.string(),
   type: z.string(),
-  code: z.string(),
+  code: z.string().nullable(),
 });
 export type ProfileErrorResponse = z.infer<typeof ProfileErrorSchema>;
 

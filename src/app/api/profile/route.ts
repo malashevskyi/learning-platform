@@ -36,7 +36,11 @@ export async function GET() {
         error: profileError.message,
       });
       return NextResponse.json(
-        { error: "Failed to fetch profile" },
+        {
+          success: false,
+          code: profileError.code,
+          error: "Failed to fetch profile",
+        },
         { status: 500 }
       );
     }
