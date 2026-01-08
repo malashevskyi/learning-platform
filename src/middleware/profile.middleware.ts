@@ -69,13 +69,17 @@ export async function withProfileCheck(
   )?.value;
 
   let isProfileComplete = cachedComplete === "true";
-
   if (!isProfileComplete) {
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from("user_profiles")
-      .select("full_name")
+      .select("full_name, native_language")
       .eq("id", user.id)
       .single();
+
+    if (profileError) {
+      // TODO: consider handling this
+      return response;
+    }
 
     isProfileComplete = Boolean(profile?.full_name);
 
