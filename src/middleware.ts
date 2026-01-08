@@ -8,16 +8,27 @@ import { withPasswordResetErrorRedirect } from "./middleware/password-reset.midd
 import { withPasswordRecoveryRestriction } from "./middleware/password-recovery.middleware";
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const isApiRoute = pathname.startsWith("/api");
+
   const initialResponse = NextResponse.next();
 
-  return chain(
+  const uiChain = chain(
     withI18n,
     withPasswordResetErrorRedirect,
     withPasswordRecoveryRestriction,
     withSignOut,
     withAuth,
     withProfileCheck
-  )(request, initialResponse);
+  );
+
+  const apiChain = chain(withAuth);
+
+  if (isApiRoute) {
+    return apiChain(request, initialResponse);
+  }
+
+  return uiChain(request, initialResponse);
 }
 
 export const config = {
